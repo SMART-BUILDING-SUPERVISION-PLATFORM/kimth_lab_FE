@@ -24,7 +24,7 @@ jobs:
           destination-github-username: CWCTBOY
           destination-repository-name: smart_building_supervision_platform_vercel
           user-email: ${{ secrets.OFFICIAL_ACCOUNT_EMAIL }}
-          commit-message: ${{ github.event.commits[0].message }}
+          commit-message: ${{ github.event.commits[-1].message }}
           target-branch: main
       - name: Test get variable exported by push-to-another-repository
         run: echo $DESTINATION_CLONED_DIRECTORY
