@@ -1,1 +1,1 @@
-# Powered by vercel - CI from SBSP to CWCTBOY_REPO
+# Powered by Githun Action - CI from SBSP to CWCTBOY_REPO
