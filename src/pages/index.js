@@ -14,7 +14,9 @@ const MainContainer = styled.div`
 const Main = () => {
   return (
     <MainContainer>
-      <h1>CI/CD Final Test</h1>
+      <h1>
+        Powered by <a href="https://vercel.com/">Vercel</a>
+      </h1>
     </MainContainer>
   );
 };

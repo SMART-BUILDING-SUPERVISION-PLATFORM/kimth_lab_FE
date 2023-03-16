@@ -1,1 +1,3 @@
-# Powered by Githun Action - CI from SBSP to CWCTBOY_REPO
+## This project is released by vercel
+
+- project will be deployed when the main branch get push or PR
