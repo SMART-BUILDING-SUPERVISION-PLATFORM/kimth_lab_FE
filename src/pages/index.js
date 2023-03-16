@@ -16,6 +16,7 @@ const Main = () => {
     <MainContainer>
       <h1>
         Powered by <a href="https://vercel.com/">Vercel</a>
+        test2
       </h1>
     </MainContainer>
   );
