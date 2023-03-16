@@ -15,8 +15,7 @@ const Main = () => {
   return (
     <MainContainer>
       <h1>
-        Welcome to <br />
-        Creative React App
+        Powered by <a href="https://vercel.com/">Vercel</a>
       </h1>
     </MainContainer>
   );
