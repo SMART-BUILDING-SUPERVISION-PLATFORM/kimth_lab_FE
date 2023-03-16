@@ -14,10 +14,7 @@ const MainContainer = styled.div`
 const Main = () => {
   return (
     <MainContainer>
-      <h1>
-        Welcome to <br />
-        Creative React App
-      </h1>
+      <h1>CI/CD Final Test</h1>
     </MainContainer>
   );
 };
