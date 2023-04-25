@@ -59,6 +59,11 @@ const SubmitButton = styled.button`
   }
 `;
 
+const Timer = styled.div`
+  display: flex;
+  position: fixed;
+`;
+
 const SignUp = () => {
   const [companyName, setCompanyName] = useState("");
   const [companyList, setCompanyList] = useState();
@@ -157,16 +162,18 @@ const SignUp = () => {
     console.log("코드전송 버튼 클릭");
 
     try {
-      const { status } = await useApi.post(
-        "/api/crew/auth/email-duplication",
-        emailInput
-      );
+      const { status } = await useApi.get("/api/crew/auth/email-duplication", {
+        params: {
+          email: emailInput,
+        },
+      });
 
-      // console.log(status);
+      console.log(status);
 
       if (status === 200) {
         // 코드 전송 성공
         setCodeSent(true);
+        console.log(codeSent);
       } else if (status === -403) {
         // 이메일 중복
         alert("이미 사용 중인 이메일입니다.");
@@ -175,18 +182,22 @@ const SignUp = () => {
         alert("서버 오류가 발생했습니다. 다시 시도해주세요.");
       }
     } catch (err) {
-      console.error(err);
+      const { code, message } = err.response.data;
+      if (code === -403) {
+        alert(message);
+      }
     }
   };
 
   const onClickValidateCode = async (e) => {
     e.preventDefault();
-
     try {
       const data = {
         code: codeInput,
         email: emailInput,
       };
+      console.log(data);
+
       const response = await useApi.post("/api/crew/auth/validate-code", data);
       const { status } = response;
 
@@ -229,6 +240,7 @@ const SignUp = () => {
         }
       }, 1000)
     );
+    return;
   };
 
   const onClickBusiness = (value) => {
@@ -257,11 +269,9 @@ const SignUp = () => {
   ];
   const { Option } = Select;
 
-  // TODO: 입력창에 커서놓고 엔터누르면 회사리스트 모달 켜지는 거 수정 필요
-
   return (
     <>
-      {codeValid && <div></div>}
+      {codeValid && <Timer>{timer}</Timer>}
       {isModalOpen && (
         <Modal
           companyList={companyList}
@@ -269,7 +279,14 @@ const SignUp = () => {
           onClose={() => setModal(false)}
         />
       )}
-      <Form>
+      <Form
+        // 입력창에서 엔터 눌렀을 경우 회사리스트 모달 띄움 방지
+        onKeyPress={(e) => {
+          if (e.key === "Enter") {
+            e.preventDefault();
+          }
+        }}
+      >
         <Select
           placeholder="업종구분"
           className="inputtext"
