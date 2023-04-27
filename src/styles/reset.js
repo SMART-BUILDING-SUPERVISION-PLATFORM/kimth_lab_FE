@@ -132,4 +132,8 @@ export const reset = css`
     text-decoration: none;
     color: inherit;
   }
+  body {
+    line-height: 1;
+    font-family: "Nanum Gothic", sans-serif;
+  }
 `;
