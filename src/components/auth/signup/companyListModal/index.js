@@ -52,7 +52,7 @@ const ModalContent = styled.div`
   }
 `;
 
-const Modal = ({ companyList, handleCompanyClick, onClose }) => {
+const Modal = ({ companyList, handleCompanyClick, onClose, onChange }) => {
   return (
     <ModalContainer>
       <ModalContent>
@@ -60,7 +60,9 @@ const Modal = ({ companyList, handleCompanyClick, onClose }) => {
           {companyList.map((company) => (
             <li
               key={company.id}
-              onClick={() => handleCompanyClick(company.id, company.name)}
+              onClick={() => {
+                handleCompanyClick(company.id, company.name);
+              }}
             >
               <p style={{ fontWeight: "bolder" }}>{company.name}</p>
               <p style={{ fontSize: "13px" }}>{company.address}</p>

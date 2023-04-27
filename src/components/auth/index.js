@@ -3,8 +3,6 @@ import { useEffect, useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import img_bg from "../../assets/img/signin_bg.avif";
 import img_logo from "../../assets/img/snust_main.png";
-import SignIn from "./signin";
-import SignUp from "./signup";
 
 const MemberContainer = styled.div`
   display: flex;
@@ -63,7 +61,7 @@ const Member = () => {
   const [path, setPath] = useState(pathname);
   useEffect(() => {
     setPath(pathname);
-  }, [pathname]); // pathname이 수정될 때마다 path 업데이트(setPath)
+  }, [pathname]);
 
   return (
     <MemberContainer>
@@ -74,7 +72,7 @@ const Member = () => {
       </div>
       <Container pathname={path} className="container">
         <div className="formbox">
-          <SignUp />
+          <Outlet />
         </div>
       </Container>
     </MemberContainer>
