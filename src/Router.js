@@ -15,7 +15,7 @@ const Router = () => {
         </Route>
         <Route element={<GlobalContainer />}>
           {/* Outlet Position /components/global/container/index.js */}
-          <Route path="overview" element={<Main />} />
+          <Route path="project" element={<Main />} />
           {/* <Route path="project:id" element={<Main />} /> */}
         </Route>
       </Routes>
