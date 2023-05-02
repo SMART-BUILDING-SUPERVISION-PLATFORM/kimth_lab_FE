@@ -31,7 +31,7 @@ const TabIcon = styled.div`
 
 const Tab = ({ className, tabName, to }) => {
   const navigate = useNavigate();
-  var path = "";
+  let path = "";
 
   switch (className) {
     case "home":
