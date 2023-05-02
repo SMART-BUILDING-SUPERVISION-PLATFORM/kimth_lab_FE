@@ -1,4 +1,7 @@
 import styled from "@emotion/styled";
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import useApi from "../../../hooks/api/axiosInterceptor";
 
 const HeaderContainer = styled.header`
   background-color: black;
@@ -10,6 +13,7 @@ const HeaderContainer = styled.header`
   align-items: center;
   font-size: 24px;
   font-weight: bold;
+  color: white;
 `;
 const Title = styled.h1`
   color: #fff;
@@ -18,9 +22,20 @@ const Title = styled.h1`
 `;
 
 const Header = () => {
+  const location = useLocation();
+  const [userInfo, setUserInfo] = useState({
+    name: "",
+  });
+  const { name } = userInfo;
+  useEffect(() => {
+    (async () => {
+      setUserInfo((await useApi.get("/api/crew")).data);
+    })();
+  }, [location]);
   return (
     <HeaderContainer>
       <Title>Digital Construction Supervison Platform</Title>
+      {name}님 해윙
     </HeaderContainer>
   );
 };

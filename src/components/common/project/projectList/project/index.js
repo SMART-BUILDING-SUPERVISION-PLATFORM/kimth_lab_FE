@@ -1,33 +1,46 @@
 import styled from "@emotion/styled";
+import ProjectWrapper from "./wrapper";
 
 const Container = styled.div`
   width: 100%;
-  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.05);
-  padding-left: 10px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
+  /* padding-left: 10px; */
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   margin-bottom: 10px;
   color: black;
+  /* border: 0.5px solid gray; */
 `;
 
-const Thumbnail = styled.image`
+const Thumbnail = styled.img`
+  margin: 12px 0px 12px 12px;
   display: flex;
-  width: 50px;
-  height: 70px;
+  width: 320px;
+  height: 180px;
+  border: 1px solid black;
 `;
 
-const ProjectInfo = styled.div``;
+const Project = ({
+  name,
+  startDate,
+  endDate,
+  processRate,
+  thumbnailUrl,
+  floorUrl,
+}) => {
+  // const { name, startDate, endDate, processRate, thumbnailUrl, floorUrl } =
+  //   project;
 
-const Project = ({ projectName, startDate, endDate, updateDate }) => {
   return (
     <Container>
-      {/* TODO: style update */}
-      <Thumbnail></Thumbnail>
-      <ProjectInfo />
-      {/* <span>{projectName}</span>
-      <span>{startDate}</span>
-      <span>{endDate}</span>
-      <span>{updateDate}</span> */}
+      <Thumbnail src={thumbnailUrl} alt="Project Thumbnail"></Thumbnail>
+      <ProjectWrapper
+        name={name}
+        startDate={startDate}
+        endDate={endDate}
+        processRate={processRate}
+        floorUrl={floorUrl}
+      />
     </Container>
   );
 };

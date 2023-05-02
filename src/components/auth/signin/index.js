@@ -99,16 +99,16 @@ const SignIn = () => {
             setForm={setForm}
           />
         ))}
+        <Button
+          className="submitBtn"
+          type="primary"
+          htmlType="submit"
+          style={{ marginTop: 10 }}
+          onClick={handleLogin}
+        >
+          Sign In
+        </Button>
       </Form>
-      <Button
-        className="submitBtn"
-        type="primary"
-        htmlType="submit"
-        style={{ marginTop: 10 }}
-        onClick={handleLogin}
-      >
-        Sign In
-      </Button>
       <Bottom>
         {bottomBtnList.map(({ className, to, textValue }) => (
           <BottomBtn

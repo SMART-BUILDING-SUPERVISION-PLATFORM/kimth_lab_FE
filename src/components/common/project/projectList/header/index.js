@@ -9,23 +9,22 @@ import {
 
 const HeaderWrapper = styled.div`
   display: flex;
+  /* position: fixed; */
   width: 100%;
   justify-content: space-between;
   flex-direction: row;
   align-items: center;
   background-color: #fff;
-  padding: 10px;
-  margin-bottom: 20px;
-  .count {
-    margin: 18px 0px 0px 10px;
-    /* border: 2px solid black; */
-    color: black;
-    font-size: 15px;
-  }
+  padding: 10px; // 위 오른쪽 아래 왼쪽
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.15);
+  .count,
   .right {
+    font-size: 15px;
+    color: black;
     display: flex;
     flex-direction: row;
     width: auto;
+    align-items: center;
     .addProject {
       width: 180px;
       background-color: #1777ff;
@@ -51,7 +50,7 @@ const SearchWrapper = styled.div`
   flex-direction: row;
 `;
 
-const Header = ({ companyId }) => {
+const Header = ({ numberOfProject }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const handleModalClose = () => {
@@ -65,7 +64,7 @@ const Header = ({ companyId }) => {
   return (
     <HeaderWrapper>
       {/* TODO: project count */}
-      <span className="count">?? Projects</span>
+      <span className="count">{numberOfProject} Projects</span>
       <div className="right">
         {/* TODO: button modularize */}
         <Button
