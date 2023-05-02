@@ -15,19 +15,8 @@ const MainContainer = styled.div`
   align-items: center;
   color: white;
   font-size: 50px;
-  padding-left: 50px;
-  padding-right: 50px;
+  padding: 0px 50px 40px 50px;
 `;
-
-// Main: 프로젝트 리스트 (overview)
-// GlobalContainer: header, sidebar, sessionID에 따라 재로그인 alert
-// ProjectListForm: Main 페이지의 한 프로젝트 프레임
-// ProjectHome: [Sidebar - HOME]
-// ProjectConstruction: [Sidebar - 시공감리]
-// ProjectStructure: [Sidebar - 구조감리]
-// ProjectRobot: [Sidebar - 로봇]
-// ProjectDocs: [Sidebar - 도면/문서]
-// ProjectSettings: [Sidebar - 설정]
 
 const Main = () => {
   // TODO: admin 종류에 따라(id에 따라) 프로젝트 리스트 다르게 하는거
@@ -56,3 +45,13 @@ const Main = () => {
 };
 
 export default Main;
+
+// Main: 프로젝트 리스트 (overview)
+// GlobalContainer: header, sidebar, sessionID에 따라 재로그인 alert
+// ProjectListForm: Main 페이지의 한 프로젝트 프레임
+// ProjectHome: [Sidebar - HOME]
+// ProjectConstruction: [Sidebar - 시공감리]
+// ProjectStructure: [Sidebar - 구조감리]
+// ProjectRobot: [Sidebar - 로봇]
+// ProjectDocs: [Sidebar - 도면/문서]
+// ProjectSettings: [Sidebar - 설정]
