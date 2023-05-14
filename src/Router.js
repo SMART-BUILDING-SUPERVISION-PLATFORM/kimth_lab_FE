@@ -13,9 +13,10 @@ const Router = () => {
           <Route path="signin" element={<SignIn />} />
           <Route path="signup" element={<SignUp />} />
         </Route>
-        <Route element={<GlobalContainer />}>
+        {/* static */}
+        <Route path="/" element={<GlobalContainer />}>
           {/* Outlet Position /components/global/container/index.js */}
-          <Route path="project" element={<Main />} />
+          <Route path="/" element={<Main />} />
           {/* <Route path="project:id" element={<Main />} /> */}
         </Route>
       </Routes>
