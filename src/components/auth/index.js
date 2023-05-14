@@ -1,8 +1,8 @@
 import styled from "@emotion/styled";
 import { useEffect, useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
-import img_bg from "../../assets/img/signin_bg.avif";
-import img_logo from "../../assets/img/snust_main.png";
+import img_bg from "../../assets/img/auth/signin_bg.avif";
+import img_logo from "../../assets/img//auth/snust_main.png";
 
 const MemberContainer = styled.div`
   display: flex;
