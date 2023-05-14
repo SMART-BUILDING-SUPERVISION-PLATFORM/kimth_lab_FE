@@ -1,7 +1,4 @@
 import styled from "@emotion/styled";
-import caution from "../../assets/img/project/overview/caution_icon.png";
-import normal from "../../assets/img/project/overview/normal_icon.png";
-import healthy from "../../assets/img/project/overview/healthy_icon.png";
 
 const OverviewBoxForm = styled.div`
   display: flex;
@@ -43,22 +40,7 @@ const OverviewIcon = styled.div`
   background-position: center;
 `;
 
-const OverviewBox = ({ className, iconName, boxLabel, countColor }) => {
-  let path = "";
-
-  switch (iconName) {
-    case "caution":
-      path = caution;
-      break;
-    case "normal":
-      path = normal;
-      break;
-    case "healthy":
-      path = healthy;
-      break;
-    default:
-  }
-
+const Alert = ({ className, iconName, boxLabel, countColor }) => {
   return (
     <OverviewBoxForm
       className={className}
@@ -67,7 +49,7 @@ const OverviewBox = ({ className, iconName, boxLabel, countColor }) => {
     >
       <OverviewIcon
         style={{
-          backgroundImage: `url(${path})`,
+          backgroundImage: `url(${iconName})`,
         }}
       />
       <div className="box">
@@ -81,4 +63,4 @@ const OverviewBox = ({ className, iconName, boxLabel, countColor }) => {
   );
 };
 
-export default OverviewBox;
+export default Alert;
