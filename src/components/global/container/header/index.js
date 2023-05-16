@@ -2,46 +2,40 @@ import styled from "@emotion/styled";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import useApi from "../../../hooks/api/axiosInterceptor";
+import My from "./my";
 
 const HeaderContainer = styled.header`
-  background-color: black;
-  /* position: absolute; */
-  /* width: 100vw; */
-  display: block;
   height: 50px;
-  /* justify-content: left; */
-  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  background-color: black;
+  padding: 0 50px;
   font-size: 24px;
   font-weight: bold;
-  color: white;
-  display: flex;
-  flex-direction: row;
-`;
-const Title = styled.h1`
-  color: #fff;
-  margin-left: 10px;
-  line-height: 50px; /* Title 요소의 높이를 부모인 HeaderContainer의 높이와 동일하게 설정 */
 `;
 
-const Button = styled.button`
-  background-color: #000;
-  border: none;
-  border-radius: 4px;
-  color: #fff;
-  padding: 10px 20px;
-  margin-left: 10px;
-  &:hover {
-    cursor: pointer;
-    background-color: #000;
-  }
+const Title = styled.h1`
+  display: block;
+  color: white;
+  line-height: 50px;
+  cursor: pointer;
 `;
 
 const Header = () => {
   const location = useLocation();
   const [userInfo, setUserInfo] = useState({
-    name: "",
+    company: {
+      address: null,
+      id: null,
+      name: null,
+    },
+    email: null,
+    id: null,
+    name: null,
+    pending: false,
+    phone: null,
+    role: { attr: null, value: null },
   });
-  const { name } = userInfo;
 
   useEffect(() => {
     (async () => {
@@ -49,20 +43,16 @@ const Header = () => {
     })();
   }, [location]);
 
-  const handleLogout = async () => {
-    try {
-      await useApi.post("/api/auth/sign-out");
-      window.location.href = "/auth/signin";
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   return (
     <HeaderContainer>
-      <Title>Digital Construction Supervison Platform</Title>
-      {name}님 해윙
-      <Button onClick={handleLogout}>로그아웃</Button>
+      <Title
+        onClick={() => {
+          window.location.href = "/";
+        }}
+      >
+        Smart Building Supervision Platform
+      </Title>
+      <My userInfo={userInfo} />
     </HeaderContainer>
   );
 };

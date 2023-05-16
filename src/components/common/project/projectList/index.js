@@ -30,7 +30,7 @@ const ProjectListContainer = ({ projectList }) => {
       <div className="scrollable">
         {projectList?.map((project) => (
           <Project
-            key={project.className}
+            key={project.id}
             ClassName={project.companyId}
             name={project.name}
             startDate={project.startDate}
