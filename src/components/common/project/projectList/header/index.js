@@ -52,18 +52,23 @@ const SearchWrapper = styled.div`
 
 const Header = ({ numberOfProject }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
-
-  const handleModalClose = () => {
-    setIsModalVisible(false);
-  };
+  const [isFilterVisible, setIsFilterVisible] = useState(false);
 
   const handleAddProjectClick = () => {
     setIsModalVisible(true);
   };
 
+  // TODO: projectList의 filter에 값 전달??
+  const handleFilterClick = () => {
+    setIsFilterVisible(true);
+  };
+
+  //
+  //
+  //
+
   return (
     <HeaderWrapper>
-      {/* TODO: project count */}
       <span className="count">{numberOfProject} Projects</span>
       <div className="right">
         {/* TODO: button modularize */}
@@ -71,7 +76,7 @@ const Header = ({ numberOfProject }) => {
           className="addProject"
           type="primary"
           icon={<PlusOutlined style={{ marginRight: "10px" }} />}
-          // onClick={handleAddProjectClick}
+          onClick={handleAddProjectClick}
         >
           새 프로젝트 추가
         </Button>
@@ -79,7 +84,8 @@ const Header = ({ numberOfProject }) => {
           className="filter"
           type="text"
           icon={<FilterOutlined />}
-          // onClick={ }
+          // TODO: filter
+          onClick={handleFilterClick}
         >
           필터
         </Button>

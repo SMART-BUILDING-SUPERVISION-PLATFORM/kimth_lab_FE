@@ -37,7 +37,6 @@ const GlobalContainer = () => {
       <Header />
       <Content>
         {isSideBar && <SideBar />}
-        {/* Outlet: 껍데기 */}
         <Outlet />
       </Content>
     </Container>

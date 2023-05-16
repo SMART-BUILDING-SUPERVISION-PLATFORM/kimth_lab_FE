@@ -6,7 +6,7 @@ import Alert from "./alert";
 
 const OverviewContainer = styled.div`
   width: 100%;
-  height: auto;
+  height: 180px;
   span {
     margin-top: 10px;
     color: black;

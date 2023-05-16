@@ -68,14 +68,12 @@ const SignIn = () => {
     password: "",
   });
 
-  const handleLogin = async (e) => {
+  const handleLogin = async () => {
     try {
       await useApi.post("/api/crew/auth/sign-in", form);
-
       alert("로그인 성공");
       navigate("/");
     } catch (err) {
-      console.log(err.response.data);
       const { code } = err.response.data;
       if (code === -401) {
         alert("비밀번호가 일치하지 않습니다.");
@@ -86,6 +84,7 @@ const SignIn = () => {
       }
     }
   };
+
   return (
     <SignContainer>
       <Form className="signinForm">
