@@ -75,6 +75,7 @@ const SignIn = () => {
       navigate("/");
     } catch (err) {
       const { code } = err.response.data;
+      console.log(code);
       if (code === -401) {
         alert("비밀번호가 일치하지 않습니다.");
       } else if (code === -411) {

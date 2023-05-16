@@ -56,6 +56,7 @@ const OverviewBox = () => {
       <div className="boxContainer">
         {overviewList.map(({ className, iconName, boxLabel, countColor }) => (
           <Alert
+            key={boxLabel}
             className={className}
             iconName={iconName}
             boxLabel={boxLabel}
