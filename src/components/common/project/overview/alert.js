@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 
-const OverviewBoxForm = styled.div`
+const OverviewWrapper = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -42,7 +42,7 @@ const OverviewIcon = styled.div`
 
 const Alert = ({ className, iconName, boxLabel, countColor }) => {
   return (
-    <OverviewBoxForm
+    <OverviewWrapper
       className={className}
       countColor={countColor}
       windowWidth={window.windowWidth}
@@ -59,7 +59,7 @@ const Alert = ({ className, iconName, boxLabel, countColor }) => {
         </span>
         <span className="label">{boxLabel}</span>
       </div>
-    </OverviewBoxForm>
+    </OverviewWrapper>
   );
 };
 

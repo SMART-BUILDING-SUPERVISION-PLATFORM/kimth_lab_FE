@@ -2,22 +2,21 @@ import styled from "@emotion/styled";
 import ProjectWrapper from "./wrapper";
 
 const Container = styled.div`
-  width: 100%;
+  height: 200px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
-  /* padding-left: 10px; */
   display: flex;
   flex-direction: row;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   color: black;
   /* border: 0.5px solid gray; */
 `;
 
 const Thumbnail = styled.img`
   margin: 12px 0px 12px 12px;
-  display: flex;
-  width: 320px;
+  width: 340px;
   height: 180px;
-  border: 1px solid black;
+  object-fit: fill;
+  overflow: hidden;
 `;
 
 const Project = ({
