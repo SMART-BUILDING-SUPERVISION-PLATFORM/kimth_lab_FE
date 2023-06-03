@@ -86,7 +86,6 @@ const SignUp = () => {
       ...form,
       [name]: value,
     });
-    console.log(form);
   };
 
   const onClickCompany = async (e) => {
@@ -124,7 +123,6 @@ const SignUp = () => {
 
   const onClickEmail = async (e) => {
     e.preventDefault();
-    console.log("코드전송 버튼 클릭");
 
     try {
       setCodeSent(false);
@@ -234,9 +232,7 @@ const SignUp = () => {
     }
   };
 
-  useEffect(() => {
-    console.log(form);
-  }, [form]);
+  useEffect(() => {}, [form]);
   return (
     <>
       {isModalOpen && (

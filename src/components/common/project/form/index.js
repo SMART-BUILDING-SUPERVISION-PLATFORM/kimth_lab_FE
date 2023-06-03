@@ -1,33 +1,51 @@
 import React, { useState, useEffect } from "react";
 import styled from "@emotion/styled";
-import { Button, Input, DatePicker, Select } from "antd";
-import useApi from "../../../components/hooks/api/axiosInterceptor";
-import ctrTypeList from "../../../components/common/project/ctrTypeList";
+import { Button, Input, Select } from "antd";
+import useApi from "../../../hooks/api/axiosInterceptor";
+import ctrTypeList from "../../../../types/parameters";
+import { useNavigate } from "react-router-dom";
 
 const { Option } = Select;
 
-const ModalContainer = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+const ProjectContainer = styled.div`
+  /* width: 100%;
+  height: 100%; */
+  /* background-color: rgba(0, 0, 0, 0.5); */
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  z-index: 9999;
+  /* z-index: 9999; */
 `;
 
-const ModalContent = styled.div`
+const ProjectContent = styled.div`
   background-color: #ffffff;
   padding: 20px;
   border-radius: 4px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  width: 80%;
-  max-width: 1000px;
+  /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
+  width: 50%;
+  /* max-width: 1000px; */
   .input {
   }
+`;
+
+const Title = styled.h3`
+  margin-top: 100px;
+  font-size: 30px;
+  font-weight: 500;
+  margin-bottom: 20px;
+`;
+
+const InputWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 20px;
+`;
+
+const Label = styled.div`
+  width: 100px;
+  margin-right: 20px;
 `;
 
 const UploadWrapper = styled.div`
@@ -88,9 +106,8 @@ const ProjectInfoForm = ({ companyId, visible, onClose }) => {
   const handleSubmit = async () => {
     try {
       await useApi.post("/api/project", form);
-
       alert("프로젝트가 생성되었습니다.");
-      onClose();
+      // onClose();
     } catch (err) {
       const { code } = err.response.data;
       if (code === -412) {
@@ -109,99 +126,96 @@ const ProjectInfoForm = ({ companyId, visible, onClose }) => {
     }
   };
 
-  useEffect(() => {
-    console.log(form);
-  }, [form]);
+  useEffect(() => {}, [form]);
+  const navigate = useNavigate();
 
   return (
-    <>
-      <ModalContainer
-        visible={visible}
-        onCancel={onClose}
-        title="프로젝트 추가"
-      >
-        <ModalContent>
-          {/* TODO: 각 입력창들의 rules 지정 ? */}
-          <label for="프로젝트 명" />
+    <ProjectContainer>
+      {/* TODO: 프로젝트 수정 */}
+      <Title>프로젝트 생성</Title>
+      <ProjectContent>
+        {/* TODO: 각 입력창들의 rules 지정 ? */}
+        <InputWrapper>
+          <Label>프로젝트 명</Label>
           <Input
             name="name"
             value={name}
             className="input"
             onChange={(e) => setName(e.target.value)}
           />
-
-          <label for="프로젝트 기간" />
+        </InputWrapper>
+        <InputWrapper>
+          <Label>프로젝트 기간</Label>
           <Input name="period" />
+        </InputWrapper>
 
-          {ctrTypeList.map(({ label, className, option }) => (
-            <Select
-              key={className}
-              placeholder={label}
-              className={className}
-              value={form[className]}
-              onChange={(e) => {
-                setForm({
-                  ...form,
-                  [className]: e,
-                });
-              }}
-            >
-              {/* <label for={label}></label> */}
-              {option.map(({ label, value }) => (
-                <Option key={value} value={value}>
-                  {label}
-                </Option>
-              ))}
-            </Select>
-          ))}
+        {ctrTypeList.map(({ label, className, option }) => (
+          <Select
+            key={className}
+            placeholder={label}
+            className={className}
+            value={form[className]}
+            onChange={(e) => {
+              setForm({
+                ...form,
+                [className]: e,
+              });
+            }}
+          >
+            {option.map(({ label, value }) => (
+              <Option key={value} value={value}>
+                {label}
+              </Option>
+            ))}
+          </Select>
+        ))}
 
-          <label for="대표 이미지(썸네일)" />
-          <UploadWrapper>
-            <Input
-              name="thumbnail"
-              valuePropName="fileList"
-              type="file"
-              // getValueFromEvent={(e) => e && e.fileList}
-            />
-            <UploadImage
-              name="thumbnail"
-              // listType="picture-card"
-              showUploadList={false}
-              beforeUpload={() => false}
-              onChange={handleImageUpload}
-            >
-              {thumbnailPreview && {}}
-            </UploadImage>
-          </UploadWrapper>
+        <label for="대표 이미지(썸네일)" />
+        <UploadWrapper>
+          <Input
+            name="thumbnail"
+            valuePropName="fileList"
+            type="file"
+            // getValueFromEvent={(e) => e && e.fileList}
+          />
+          <UploadImage
+            name="thumbnail"
+            // listType="picture-card"
+            showUploadList={false}
+            beforeUpload={() => false}
+            onChange={handleImageUpload}
+          >
+            {thumbnailPreview && {}}
+          </UploadImage>
+        </UploadWrapper>
 
-          <label for="층별 평면도" />
-          <UploadWrapper>
-            <Input
-              name="floorPlan"
-              beforeUpload={() => false}
-              // onChange={handleFileUpload}
-            />
-            {/* TODO: 폴더 선택? */}
-            <Button>파일 선택</Button>
-          </UploadWrapper>
+        <label for="층별 평면도" />
+        <UploadWrapper>
+          <Input
+            name="floorPlan"
+            beforeUpload={() => false}
+            // onChange={handleFileUpload}
+          />
+          {/* TODO: 폴더 선택? */}
+          <Button>파일 선택</Button>
+        </UploadWrapper>
 
-          <Footer>
-            <Button key="cancel" onClick={onClose} className="btn">
-              취소
-            </Button>
-            <Button
-              key="submit"
-              type="primary"
-              onClick={handleSubmit}
-              style={{ backgroundColor: "1777ff" }}
-              // loading={loading}
-            >
-              등록
-            </Button>
-          </Footer>
-        </ModalContent>
-      </ModalContainer>
-    </>
+        <Footer>
+          <Button key="cancel" onClick={navigate("/")} className="btn">
+            취소
+          </Button>
+          <Button
+            key="submit"
+            type="primary"
+            onClick={handleSubmit}
+            style={{ backgroundColor: "1777ff" }}
+            // loading={loading}
+          >
+            등록
+          </Button>
+        </Footer>
+      </ProjectContent>
+    </ProjectContainer>
   );
 };
 

@@ -6,11 +6,14 @@ import {
   FilterOutlined,
   SearchOutlined,
 } from "@ant-design/icons";
+import FilterDropdown from "../../../filter";
+import { useNavigate } from "react-router-dom";
 
 const HeaderWrapper = styled.div`
   display: flex;
   /* position: fixed; */
   width: 100%;
+  height: 60px;
   justify-content: space-between;
   flex-direction: row;
   align-items: center;
@@ -45,22 +48,20 @@ const SearchWrapper = styled.div`
   border: none;
   width: 200px;
   height: 30px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); */
+  border: 0.5px solid lightgray;
   display: flex;
   flex-direction: row;
 `;
 
-const Header = ({ numberOfProject }) => {
-  const [isModalVisible, setIsModalVisible] = useState(false);
+const Header = ({ numberOfProject, onFilterChange }) => {
   const [isFilterVisible, setIsFilterVisible] = useState(false);
-
-  const handleAddProjectClick = () => {
-    setIsModalVisible(true);
-  };
+  const navigate = useNavigate();
 
   // TODO: projectList의 filter에 값 전달??
   const handleFilterClick = () => {
     setIsFilterVisible(true);
+    onFilterChange();
   };
 
   //
@@ -68,7 +69,7 @@ const Header = ({ numberOfProject }) => {
   //
 
   return (
-    <HeaderWrapper>
+    <HeaderWrapper isVisible={isFilterVisible}>
       <span className="count">{numberOfProject} Projects</span>
       <div className="right">
         {/* TODO: button modularize */}
@@ -76,19 +77,11 @@ const Header = ({ numberOfProject }) => {
           className="addProject"
           type="primary"
           icon={<PlusOutlined style={{ marginRight: "10px" }} />}
-          onClick={handleAddProjectClick}
+          onClick={navigate("project/add")}
         >
           새 프로젝트 추가
         </Button>
-        <Button
-          className="filter"
-          type="text"
-          icon={<FilterOutlined />}
-          // TODO: filter
-          onClick={handleFilterClick}
-        >
-          필터
-        </Button>
+        <FilterDropdown onFilterChange={onFilterChange} />
         <SearchWrapper>
           <Input placeholder="프로젝트 검색" style={{ border: "none" }} />
           <Button
@@ -98,12 +91,6 @@ const Header = ({ numberOfProject }) => {
           />
         </SearchWrapper>
       </div>
-      {/*       
-      <AddProjectModal
-        companyId={companyId}
-        visible={isModalVisible}
-        onClose={handleModalClose}
-      /> */}
     </HeaderWrapper>
   );
 };

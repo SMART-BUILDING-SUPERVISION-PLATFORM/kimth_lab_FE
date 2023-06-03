@@ -1,7 +1,6 @@
 import styled from "@emotion/styled";
 import Header from "./header";
 import Project from "./project";
-import Filter from "../../filter";
 import { useState } from "react";
 
 const ProjectContainer = styled.div`
@@ -20,13 +19,18 @@ const ProjectContainer = styled.div`
 `;
 
 const ProjectListContainer = ({ projectList }) => {
-  const [isFilterVisible, setIsFilterVisible] = useState(false);
+  const [selectedFilters, setSelectedFilters] = useState({});
+
+  const handleFilterChange = (selectedOptions) => {
+    setSelectedFilters(selectedOptions);
+  };
 
   return (
     <ProjectContainer>
-      {/* {isFilterVisible && <Filter onClose={setIsFilterVisible} />} */}
-
-      <Header numberOfProject={projectList?.length} />
+      <Header
+        numberOfProject={projectList?.length}
+        onFilterClick={handleFilterChange}
+      />
       <div className="scrollable">
         {projectList?.map((project) => (
           <Project

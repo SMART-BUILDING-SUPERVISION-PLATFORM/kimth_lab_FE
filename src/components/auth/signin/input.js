@@ -10,7 +10,6 @@ const SignInInput = ({ type, placeholder, name, form, setForm }) => {
           ...form,
           [name]: value,
         });
-        console.log(form);
       }}
       className="loginInput"
       type={name}

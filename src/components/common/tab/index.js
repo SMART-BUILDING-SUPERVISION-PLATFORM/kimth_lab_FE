@@ -14,7 +14,6 @@ const Tab = styled.div`
 
 const Tabs = ({ items }) => {
   const { pathname } = useLocation();
-  console.log(pathname);
   return (
     <TabsContainer>
       {items.map(({ name, to }) => (
