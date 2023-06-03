@@ -138,7 +138,10 @@ const ProjectWrapper = ({
     <Container>
       {/*  */}
       <div className="upper">
-        <ProjectInfo>
+        <ProjectInfo
+        // TODO: project detail page로 navigate
+        // onClick={() => { }}
+        >
           <span className="name">{name}</span>
           <div style={{ height: "50px" }} />
           <ProgressBar>

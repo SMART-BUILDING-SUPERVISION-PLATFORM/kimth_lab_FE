@@ -4,6 +4,7 @@ import { Button, Input, Select } from "antd";
 import useApi from "../../../hooks/api/axiosInterceptor";
 import ctrTypeList from "../../../../types/parameters";
 import { useNavigate } from "react-router-dom";
+import { DatePicker } from "antd";
 
 const { Option } = Select;
 
@@ -40,18 +41,22 @@ const InputWrapper = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  width: 700px;
   margin-bottom: 20px;
 `;
 
 const Label = styled.div`
-  width: 100px;
+  width: 170px;
   margin-right: 20px;
+  font-size: 15px;
+  text-align: right;
 `;
 
 const UploadWrapper = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  width: 700px;
 `;
 
 const UploadImage = styled.div``;
@@ -87,29 +92,52 @@ const ProjectInfoForm = ({ companyId, visible, onClose }) => {
     detailCtrType: "",
     thumbnailUrl: "",
     floorPlanUrl: "",
-    // companyId,
-    // name,
-    // startDate: startDate.format("YYYY-MM-DD"),
-    // endDate: endDate.format("YYYY-MM-DD"),
-    // ctrType,
-    // detailCtrType,
-    // thumbnailUrl,
-    // floorPlanUrl,
   });
 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setForm((prevForm) => ({
+      ...prevForm,
+      [name]: value,
+    }));
+  };
+
+  const handleSelectChange = (e, name) => {
+    setForm((prevForm) => ({
+      ...prevForm,
+      [name]: e,
+    }));
+  };
+
+  const handleDateChange = (name, date) => {
+    const day = date.$D < 10 ? `0${date.$D}` : date.$D;
+    const month = date.$M + 1 < 10 ? `0${date.$M + 1}` : date.$M + 1;
+    const dateString = `${date.$y}-${month}-${day}`;
+    setForm((prevForm) => ({
+      ...prevForm,
+      [name]: dateString,
+    }));
+  };
+
   const handleImageUpload = () => {
-    setThumbnailPreview(true);
+    setForm((prevForm) => ({
+      ...prevForm,
+      thumbnailPreview: true,
+    }));
   };
 
   const handleFileUpload = () => {};
 
   const handleSubmit = async () => {
+    console.log(form);
     try {
       await useApi.post("/api/project", form);
       alert("프로젝트가 생성되었습니다.");
+      window.location.href = "/";
       // onClose();
     } catch (err) {
       const { code } = err.response.data;
+      console.log(code);
       if (code === -412) {
         // 프로젝트 생성 권한이 없음
         alert("프로젝트 생성 권한이 없습니다.");
@@ -126,82 +154,137 @@ const ProjectInfoForm = ({ companyId, visible, onClose }) => {
     }
   };
 
-  useEffect(() => {}, [form]);
+  useEffect(() => {
+    console.log(form);
+  }, [form]);
+
   const navigate = useNavigate();
 
   return (
     <ProjectContainer>
       {/* TODO: 프로젝트 수정 */}
-      <Title>프로젝트 생성</Title>
+      {/* TODO: Service Admin - company 선택 기능 */}
+      <Title></Title>
       <ProjectContent>
         {/* TODO: 각 입력창들의 rules 지정 ? */}
         <InputWrapper>
-          <Label>프로젝트 명</Label>
+          <Label>
+            <text>프로젝트 명</text>
+          </Label>
           <Input
             name="name"
-            value={name}
+            value={form.name}
             className="input"
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => handleInputChange(e)}
           />
         </InputWrapper>
-        <InputWrapper>
+
+        <InputWrapper style={{ textAlign: "center" }}>
           <Label>프로젝트 기간</Label>
-          <Input name="period" />
+          <DatePicker
+            name="startDate"
+            placeholder="시작일을 선택해주세요."
+            style={{ width: "300px" }}
+            onChange={(date) => {
+              handleDateChange("startDate", date);
+            }}
+          />
+          <div style={{ width: "80px" }}>~</div>
+          <DatePicker
+            name="endDate"
+            placeholder="종료일을 선택해주세요."
+            style={{ width: "300px" }}
+            onChange={(date) => {
+              handleDateChange("endDate", date);
+            }}
+          />
         </InputWrapper>
 
-        {ctrTypeList.map(({ label, className, option }) => (
-          <Select
-            key={className}
-            placeholder={label}
-            className={className}
-            value={form[className]}
-            onChange={(e) => {
-              setForm({
-                ...form,
-                [className]: e,
-              });
-            }}
-          >
-            {option.map(({ label, value }) => (
-              <Option key={value} value={value}>
-                {label}
-              </Option>
-            ))}
-          </Select>
-        ))}
+        <InputWrapper>
+          <Label>
+            <text>공사구분</text>
+          </Label>
+          {ctrTypeList.slice(0, 1).map(({ className, option }) => (
+            <Select
+              key={className}
+              className={className}
+              value={form.ctrType}
+              style={{ width: "700px" }}
+              name="ctrType"
+              onChange={(e) => {
+                handleSelectChange(e, "ctrType");
+              }}
+              placeholder="공사구분을 선택해주세요."
+            >
+              {option.map(({ label, value }) => (
+                <Option key={value} value={value}>
+                  {label}
+                </Option>
+              ))}
+            </Select>
+          ))}
+        </InputWrapper>
 
-        <label for="대표 이미지(썸네일)" />
-        <UploadWrapper>
-          <Input
-            name="thumbnail"
-            valuePropName="fileList"
-            type="file"
-            // getValueFromEvent={(e) => e && e.fileList}
-          />
-          <UploadImage
-            name="thumbnail"
-            // listType="picture-card"
-            showUploadList={false}
-            beforeUpload={() => false}
-            onChange={handleImageUpload}
-          >
-            {thumbnailPreview && {}}
-          </UploadImage>
-        </UploadWrapper>
+        <InputWrapper>
+          <Label>
+            <text>세부 공사구분</text>
+          </Label>
+          {ctrTypeList.slice(1, 2).map(({ className, option }) => (
+            <Select
+              key={className}
+              className={className}
+              value={form.detailCtrType}
+              style={{ width: "700px" }}
+              name="detailCtrType"
+              onChange={(e) => {
+                handleSelectChange(e, "detailCtrType");
+              }}
+            >
+              {option.map(({ label, value }) => (
+                <Option key={value} value={value}>
+                  {label}
+                </Option>
+              ))}
+            </Select>
+          ))}
+        </InputWrapper>
 
-        <label for="층별 평면도" />
-        <UploadWrapper>
-          <Input
-            name="floorPlan"
-            beforeUpload={() => false}
-            // onChange={handleFileUpload}
-          />
-          {/* TODO: 폴더 선택? */}
-          <Button>파일 선택</Button>
-        </UploadWrapper>
+        <InputWrapper>
+          <Label>대표 이미지(썸네일)</Label>
+          <UploadWrapper>
+            <Input
+              name="thumbnail"
+              valuePropName="fileList"
+              type="file"
+              // getValueFromEvent={(e) => e && e.fileList}
+            />
+            <UploadImage
+              name="thumbnail"
+              showUploadList={false}
+              beforeUpload={() => false}
+              onChange={handleImageUpload}
+            ></UploadImage>
+          </UploadWrapper>
+        </InputWrapper>
+        {/* TODO: check */}
+        {thumbnailPreview && <ImagePreview src="thumbnail" />}
+
+        <InputWrapper>
+          <Label>층별 평면도</Label>
+          <UploadWrapper>
+            <Input
+              name="floorplan"
+              valuePropName="fileList"
+              type="file"
+              // getValueFromEvent={(e) => e && e.fileList}
+            />
+            {/* TODO: 폴더 선택? */}
+            {/* <Button>파일 선택</Button> */}
+          </UploadWrapper>
+        </InputWrapper>
 
         <Footer>
-          <Button key="cancel" onClick={navigate("/")} className="btn">
+          <Button key="cancel" onClick={() => navigate("/")} className="btn">
             취소
           </Button>
           <Button
