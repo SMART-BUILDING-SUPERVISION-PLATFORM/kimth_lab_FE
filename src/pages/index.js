@@ -21,6 +21,7 @@ const MainContainer = styled.div`
 const Main = () => {
   // TODO: admin 종류에 따라(id에 따라) 프로젝트 리스트 다르게 하는거
   const [projectList, setProjectList] = useState();
+
   const [params, setParams] = useState({
     name: null,
     ctrClass: null,
@@ -34,7 +35,6 @@ const Main = () => {
       const { data } = await useApi.get("/api/project", {
         params,
       });
-
       setProjectList(data);
     })();
   }, [params]);

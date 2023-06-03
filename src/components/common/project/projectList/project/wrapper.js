@@ -53,6 +53,7 @@ const ProjectStatus = styled.div`
   height: 140px;
   display: flex;
   flex-direction: row;
+  justify-content: space-evenly;
   .statusContainer {
     flex-grow: 1;
     display: flex;
