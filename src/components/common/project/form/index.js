@@ -5,6 +5,7 @@ import useApi from "../../../hooks/api/axiosInterceptor";
 import ctrTypeList from "../../../../types/parameters";
 import { useNavigate } from "react-router-dom";
 import { DatePicker } from "antd";
+import { DatePicker } from "antd";
 
 const { Option } = Select;
 
@@ -35,6 +36,7 @@ const InputWrapper = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  width: 700px;
   width: 700px;
   margin-bottom: 20px;
 `;
