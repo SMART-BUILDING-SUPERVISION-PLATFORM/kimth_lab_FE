@@ -24,13 +24,13 @@ const GlobalContainer = () => {
 
   // TODO: 세션 아이디 있을 경우 project list로, 없으면 로그인 alert
 
-  // useEffect(() => {
-  //   if (location.pathname === "/project") {
-  //     setIsSideBar(false);
-  //   } else if (location.pathname.startsWith("/project/")) {
-  //     setIsSideBar(true);
-  //   }
-  // }, [location]);
+  useEffect(() => {
+    if (location.pathname === "/project/add") {
+      setIsSideBar(false);
+    } else if (location.pathname.startsWith("/project")) {
+      setIsSideBar(true);
+    }
+  }, [location]);
 
   return (
     <Container>

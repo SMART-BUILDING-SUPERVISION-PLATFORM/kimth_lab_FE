@@ -11,10 +11,6 @@ const DropdownContainer = styled.div`
 
 const { Option } = Select;
 
-//
-//
-//
-
 const FilterDropdown = ({ onFilterChange }) => {
   const [selectedOptions, setSelectedOptions] = useState({});
 

@@ -62,35 +62,33 @@ const Nav = ({ role }) => {
     role === "COMPANY_ADMIN" || role === "SERVICE_ADMIN"
       ? item.ADMIN
       : item.NORMAL;
+
+  const logOut = async (label, role) => {
+    if (label === "로그아웃") {
+      (async () => {
+        try {
+          await useApi.get("/api/sign-out");
+          nav("/auth/signin");
+        } catch (error) {
+          alert("다시 시도해주세요.");
+        }
+      })();
+    } else if (label === "내 정보") {
+      nav("/my");
+    } else {
+      if (role === "COMPANY_ADMIN") {
+        nav("/admin/company");
+      } else {
+        nav("/admin/service");
+      }
+    }
+  };
+
   return (
     <NavContainer role={role}>
       {itemList.map(({ key, label }) => (
         <div className="navContainer" key={key}>
-          <span
-            onClick={() => {
-              if (label === "로그아웃") {
-                (async () => {
-                  try {
-                    await useApi.get("/api/sign-out");
-                    alert("정상적으로 로그아웃 되었습니다.");
-                    nav("/auth/signin");
-                  } catch (error) {
-                    alert("서버 에러입니다. 다시 시도해주세요");
-                  }
-                })();
-              } else if (label === "내 정보") {
-                nav("/my");
-              } else {
-                if (role === "COMPANY_ADMIN") {
-                  nav("/company-admin");
-                } else {
-                  nav("/service-admin");
-                }
-              }
-            }}
-          >
-            {label}
-          </span>
+          <span onClick={() => logOut(label, role)}>{label}</span>
         </div>
       ))}
     </NavContainer>
