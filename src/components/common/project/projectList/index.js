@@ -29,7 +29,7 @@ const ProjectListContainer = ({ projectList }) => {
     <ProjectContainer>
       <Header
         numberOfProject={projectList?.length}
-        onFilterClick={handleFilterChange}
+        onFilterChange={handleFilterChange}
       />
       <div className="scrollable">
         {projectList?.map((project) => (

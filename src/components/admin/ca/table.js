@@ -40,12 +40,18 @@ const ToggleButton = styled.button`
 `;
 
 const Item = ({ crew }) => {
-  const serializedCrew = Object.values(crew);
-  // const allowCrew = async () => {
-  //   try {
-  //     await useApi.put(`/api/crew/admin-ca/${id}`);
-  //   } catch (err) {}
-  // };
+  const serializedCrew = Object.values(crew).slice(1, 5);
+  const allowCrew = async () => {
+    try {
+      await useApi.put(`/api/crew/admin-ca/${crew.id}`);
+      alert("승인되었습니다.");
+      window.location.reload();
+    } catch (err) {
+      const { code } = err.response.data;
+      if (code === -423) alert("접근 권한이 없습니다.");
+      if (code === -423) alert("존재하지 않는 회원입니다.");
+    }
+  };
   return (
     <ElementContainer>
       {serializedCrew.map((values) => (
@@ -53,7 +59,7 @@ const Item = ({ crew }) => {
           <span className="txt">{values}</span>
         </Element>
       ))}
-      <ToggleButton>승인</ToggleButton>
+      <ToggleButton onClick={allowCrew}>승인</ToggleButton>
     </ElementContainer>
   );
 };

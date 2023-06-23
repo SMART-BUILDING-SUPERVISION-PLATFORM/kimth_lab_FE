@@ -1,13 +1,10 @@
 import styled from "@emotion/styled";
 import { Input, Button } from "antd";
 import { useState } from "react";
-import {
-  PlusOutlined,
-  FilterOutlined,
-  SearchOutlined,
-} from "@ant-design/icons";
+import { PlusOutlined, SearchOutlined } from "@ant-design/icons";
 import FilterDropdown from "../../../filter";
 import { useNavigate } from "react-router-dom";
+import { ctrTypeList } from "../../../../../types/parameters";
 
 const HeaderWrapper = styled.div`
   display: flex;
@@ -81,14 +78,9 @@ const Header = ({ numberOfProject, onFilterChange }) => {
         >
           새 프로젝트 추가
         </Button>
-        <FilterDropdown onFilterChange={onFilterChange} />
+        <FilterDropdown onFilterChange={onFilterChange} list={ctrTypeList} />
         <SearchWrapper>
           <Input placeholder="프로젝트 검색" style={{ border: "none" }} />
-          <Button
-            type="text"
-            icon={<SearchOutlined style={{ color: "#aaa", fontSize: 16 }} />}
-            // onClick={ }
-          />
         </SearchWrapper>
       </div>
     </HeaderWrapper>

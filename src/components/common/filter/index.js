@@ -1,5 +1,4 @@
 import styled from "@emotion/styled";
-import ctrTypeList from "../../../types/parameters";
 import React, { useState } from "react";
 import { Select } from "antd";
 
@@ -11,7 +10,7 @@ const DropdownContainer = styled.div`
 
 const { Option } = Select;
 
-const FilterDropdown = ({ onFilterChange }) => {
+const FilterDropdown = ({ onFilterChange, list }) => {
   const [selectedOptions, setSelectedOptions] = useState({});
 
   const handleOptionChange = (className, value) => {
@@ -29,7 +28,7 @@ const FilterDropdown = ({ onFilterChange }) => {
 
   return (
     <DropdownContainer>
-      {ctrTypeList?.map(({ label, className, option }) => (
+      {list?.map(({ label, className, option }) => (
         <Select
           key={className}
           placeholder={label}

@@ -77,9 +77,9 @@ const Nav = ({ role }) => {
       nav("/my");
     } else {
       if (role === "COMPANY_ADMIN") {
-        nav("/admin/company");
+        nav("/admin/company/newbie");
       } else {
-        nav("/admin/service");
+        nav("/admin/service/newbie");
       }
     }
   };
