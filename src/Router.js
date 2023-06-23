@@ -8,6 +8,7 @@ import AdminCa from "./pages/admin/admin-ca";
 import AdminSa from "./pages/admin/admin-sa";
 import ProjectInfoForm from "./components/common/project/form";
 import Newbie from "./components/admin/ca/newbie";
+import MyPage from "./components/common/user";
 
 const Router = () => {
   return (
@@ -19,12 +20,13 @@ const Router = () => {
         </Route>
         {/* static */}
         <Route path="/" element={<GlobalContainer />}>
-          {/* Outlet Position /components/global/container/index.js */}
           <Route path="/" element={<Main />} />
+
           <Route path="project">
             <Route path="add" element={<ProjectInfoForm />} />
             {/* <Route path=":projectId" /> */}
           </Route>
+
           <Route path="admin">
             <Route path="service" element={<AdminSa />}>
               {/* <Route path=":menu" /> */}
@@ -33,6 +35,8 @@ const Router = () => {
               <Route path="newbie" element={<Newbie />} />
             </Route>
           </Route>
+
+          <Route path="my" element={<MyPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "@emotion/styled";
 import { Button, Input, Select } from "antd";
 import useApi from "../../../hooks/api/axiosInterceptor";
-import ctrTypeList from "../../../../types/parameters";
+import { ctrTypeList } from "../../../../types/parameters";
 import { useNavigate } from "react-router-dom";
 import { DatePicker } from "antd";
 
@@ -35,6 +35,7 @@ const InputWrapper = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  width: 700px;
   width: 700px;
   margin-bottom: 20px;
 `;
@@ -154,7 +155,7 @@ const ProjectInfoForm = (companyId) => {
         {/* TODO: 각 입력창들의 rules 지정 ? */}
         <InputWrapper>
           <Label>
-            <text>프로젝트 명</text>
+            <span>프로젝트 명</span>
           </Label>
           <Input
             name="name"
@@ -187,7 +188,7 @@ const ProjectInfoForm = (companyId) => {
 
         <InputWrapper>
           <Label>
-            <text>공사구분</text>
+            <span>공사구분</span>
           </Label>
           {ctrTypeList.slice(0, 1).map(({ className, option }) => (
             <Select
@@ -212,7 +213,7 @@ const ProjectInfoForm = (companyId) => {
 
         <InputWrapper>
           <Label>
-            <text>세부 공사구분</text>
+            <span>세부 공사구분</span>
           </Label>
           {ctrTypeList.slice(1, 2).map(({ className, option }) => (
             <Select
@@ -235,7 +236,9 @@ const ProjectInfoForm = (companyId) => {
         </InputWrapper>
 
         <InputWrapper>
-          <Label>대표 이미지(썸네일)</Label>
+          <Label>
+            <span>대표 이미지(썸네일)</span>
+          </Label>
           <UploadWrapper>
             <Input
               name="thumbnail"
@@ -255,7 +258,9 @@ const ProjectInfoForm = (companyId) => {
         {/* {thumbnailPreview && <ImagePreview src="thumbnail" />} */}
 
         <InputWrapper>
-          <Label>층별 평면도</Label>
+          <Label>
+            <span>층별 평면도</span>
+          </Label>
           <UploadWrapper>
             <Input
               name="floorplan"

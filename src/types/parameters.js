@@ -26,4 +26,93 @@ const ctrTypeList = [
   },
 ];
 
-export default ctrTypeList;
+const roleTypes = {
+  label: "업종구분",
+  className: "role",
+  option: [
+    {
+      label: "서비스관리자",
+      value: "서비스관리자",
+    },
+    {
+      label: "관리자",
+      value: "관리자",
+    },
+    {
+      label: "발주처",
+      value: "발주처",
+    },
+    {
+      label: "감리사",
+      value: "감리사",
+    },
+    {
+      label: "건설사",
+      value: "건설사",
+    },
+    {
+      label: "설계사",
+      value: "설계사",
+    },
+  ],
+};
+
+const roleParser = (role) => {
+  let roleTypes = null;
+  switch (role) {
+    case "서비스관리자":
+      roleTypes = "SERVICE_ADMIN";
+      break;
+    case "관리자":
+      roleTypes = "COMPANY_ADMIN";
+      break;
+    case "발주처":
+      roleTypes = "ORDER";
+      break;
+    case "감리사":
+      roleTypes = "SUPERVISOR";
+      break;
+    case "건설사":
+      roleTypes = "CONSTRUCTION";
+      break;
+    case "설계사":
+      roleTypes = "DESIGN";
+      break;
+    default:
+      roleTypes = null;
+      break;
+  }
+
+  return roleTypes;
+};
+
+const reverseRoleParser = (role) => {
+  let roleTypes = null;
+  switch (role) {
+    case "SERVICE_ADMIN":
+      roleTypes = "서비스관리자";
+      break;
+    case "COMPANY_ADMIN":
+      roleTypes = "관리자";
+      break;
+    case "ORDER":
+      roleTypes = "발주처";
+      break;
+    case "SUPERVISOR":
+      roleTypes = "감리사";
+      break;
+    case "CONSTRUCTION":
+      roleTypes = "건설사";
+      break;
+    case "DESIGN":
+      roleTypes = "설계사";
+      break;
+    default:
+      roleTypes = null;
+      break;
+  }
+
+  return roleTypes;
+};
+
+export { ctrTypeList, roleTypes, roleParser, reverseRoleParser };
