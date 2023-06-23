@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "@emotion/styled";
 import { Button, Input, Select } from "antd";
 import useApi from "../../../hooks/api/axiosInterceptor";
-import ctrTypeList from "../../../../types/parameters";
+import { ctrTypeList } from "../../../../types/parameters";
 import { useNavigate } from "react-router-dom";
 import { DatePicker } from "antd";
 

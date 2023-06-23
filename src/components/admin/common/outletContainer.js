@@ -2,8 +2,7 @@ import styled from "@emotion/styled";
 
 const OutletContainer = styled.div`
   width: 100%;
-  min-height: calc(100% - 50px);
-  /* background-color: rgba(0, 0, 0, 0.2); */
+  min-height: calc(100% - 120px);
   overflow: scroll;
 `;
 
