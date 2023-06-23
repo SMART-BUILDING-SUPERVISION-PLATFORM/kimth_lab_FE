@@ -9,23 +9,17 @@ import { DatePicker } from "antd";
 const { Option } = Select;
 
 const ProjectContainer = styled.div`
-  /* width: 100%;
-  height: 100%; */
-  /* background-color: rgba(0, 0, 0, 0.5); */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  /* z-index: 9999; */
 `;
 
 const ProjectContent = styled.div`
   background-color: #ffffff;
   padding: 20px;
   border-radius: 4px;
-  /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
   width: 50%;
-  /* max-width: 1000px; */
   .input {
   }
 `;
@@ -73,16 +67,7 @@ const Footer = styled.div`
   }
 `;
 
-const ProjectInfoForm = ({ companyId, visible, onClose }) => {
-  const [name, setName] = useState("");
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
-  const [ctrType, setCtrType] = useState("");
-  const [detailCtrType, setDetailCtrType] = useState("");
-  const [thumbnailUrl, setThumbnailUrl] = useState("");
-  const [floorPlanUrl, setFloorPlanUrl] = useState("");
-  const [thumbnailPreview, setThumbnailPreview] = useState(null);
-
+const ProjectInfoForm = (companyId) => {
   const [form, setForm] = useState({
     companyId: 0,
     name: "",
@@ -267,7 +252,7 @@ const ProjectInfoForm = ({ companyId, visible, onClose }) => {
           </UploadWrapper>
         </InputWrapper>
         {/* TODO: check */}
-        {thumbnailPreview && <ImagePreview src="thumbnail" />}
+        {/* {thumbnailPreview && <ImagePreview src="thumbnail" />} */}
 
         <InputWrapper>
           <Label>층별 평면도</Label>
