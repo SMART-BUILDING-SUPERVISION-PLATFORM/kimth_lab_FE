@@ -1,8 +1,5 @@
 import styled from "@emotion/styled";
-import { useEffect } from "react";
-import useApi from "../../../../hooks/api/axiosInterceptor";
 import Status from "./status";
-// import ProgressBar from "react-bootstrap/ProgressBar";
 
 const Container = styled.div`
   display: flex;
