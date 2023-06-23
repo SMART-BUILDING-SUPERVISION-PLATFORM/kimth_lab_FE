@@ -2,7 +2,6 @@ import styled from "@emotion/styled";
 import { Input, Button } from "antd";
 import { useState } from "react";
 import { PlusOutlined, SearchOutlined } from "@ant-design/icons";
-import { PlusOutlined, SearchOutlined } from "@ant-design/icons";
 import FilterDropdown from "../../../filter";
 import { useNavigate } from "react-router-dom";
 import { ctrTypeList } from "../../../../../types/parameters";
