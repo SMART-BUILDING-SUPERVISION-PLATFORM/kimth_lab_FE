@@ -123,7 +123,7 @@ const SignIn = () => {
     (async () => {
       try {
         const { status } = await fetch(
-          `http://127.0.0.1:3000/api/crew/auth/check`,
+          `http://localhost:3000/api/crew/auth/check`,
           {
             method: "GET",
             credentials: "include",
