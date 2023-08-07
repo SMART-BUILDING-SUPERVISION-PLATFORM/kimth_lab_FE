@@ -2,8 +2,8 @@ import axios from "axios";
 
 const rootUrl =
   process.env.NODE_ENV === "production"
-    ? "http://localhost:8080"
-    : "http://localhost:8080";
+    ? "http://127.0.0.1:8080"
+    : "http://127.0.0.1:8080";
 
 const useApi = axios.create({
   headers: {
