@@ -99,7 +99,7 @@ const SignIn = () => {
 
   const handleLogin = async () => {
     try {
-      await useApi.post(`${HOST}/api/crew/auth/sign-in`, form);
+      await useApi.post(`${FETCH_HOST}/api/crew/auth/sign-in`, form);
       setIsLoginSuccess(true);
       setTimeout(() => {
         navigate("/home");
