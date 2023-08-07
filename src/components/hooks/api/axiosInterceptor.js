@@ -1,9 +1,14 @@
 import axios from "axios";
 
+const rootUrl =
+  process.env.NODE_ENV === "production"
+    ? "http://localhost:8080"
+    : "http://localhost:8080";
+
 const useApi = axios.create({
   headers: {
     "Content-Type": "application/json;charset=UTF-8",
-    "Access-Control-Allow-Origin": "http://localhost:8080",
+    "Access-Control-Allow-Origin": rootUrl,
     "Access-Control-Allow-Credentials": "true",
   },
 });
