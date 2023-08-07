@@ -2,8 +2,8 @@ const ctrTypeList = [
   {
     label: "공사구분",
     className: "ctrType",
-    // value: form.ctrType,
     option: [
+      { label: "공사구분", value: null },
       { label: "건축공사", value: "건축공사" },
       { label: "토목공사", value: "토목공사" },
       { label: "플랜트공사", value: "플랜트공사" },
@@ -13,8 +13,8 @@ const ctrTypeList = [
   {
     label: "세부 공사구분",
     className: "detailCtrType",
-    // value: form.detailCtrType,
     option: [
+      { label: "세부 공사구분", value: null },
       { label: "주거용 건축물", value: "주거용 건축물" },
       { label: "사무실용 건축물", value: "사무실용 건축물" },
       { label: "상업용 건축물", value: "상업용 건축물" },
@@ -53,6 +53,29 @@ const roleTypes = {
     {
       label: "설계사",
       value: "설계사",
+    },
+  ],
+};
+
+const projectRoleTypes = {
+  label: "프로젝트 권한",
+  className: "role",
+  option: [
+    {
+      label: "프로젝트 관리자",
+      value: "프로젝트 관리자",
+    },
+    {
+      label: "참여 권한자",
+      value: "참여 권한자",
+    },
+    {
+      label: "열람 권한자",
+      value: "열람 권한자",
+    },
+    {
+      label: "참여승인 대기자",
+      value: "참여승인 대기자",
     },
   ],
 };
@@ -115,4 +138,10 @@ const reverseRoleParser = (role) => {
   return roleTypes;
 };
 
-export { ctrTypeList, roleTypes, roleParser, reverseRoleParser };
+export {
+  ctrTypeList,
+  roleTypes,
+  roleParser,
+  reverseRoleParser,
+  projectRoleTypes,
+};

@@ -10,16 +10,11 @@ const useApi = axios.create({
 
 useApi.interceptors.response.use(
   (response) => response,
-  ({
-    // error control
-    response: {
-      data: { code, message },
-    },
-  }) => {
-    if (code === -424) {
-      alert(message);
+  (err) => {
+    const { code: errCode } = err.response.data;
+    if (errCode === -424) {
       window.location.href = "/auth/signin";
-    }
+    } else return Promise.reject(err);
   }
 );
 

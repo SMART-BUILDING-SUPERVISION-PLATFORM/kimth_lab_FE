@@ -1,8 +1,7 @@
 import styled from "@emotion/styled";
 import { useEffect, useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
-import img_bg from "../../assets/img/auth/signin_bg.avif";
-import img_logo from "../../assets/img//auth/snust_main.png";
+import mp4_bg from "../../assets/mp4/construction_site.mp4";
 
 const MemberContainer = styled.div`
   display: flex;
@@ -12,29 +11,17 @@ const MemberContainer = styled.div`
   align-items: center;
   width: 100vw;
   height: 100vh;
-  overflow: hidden; // 이미지 넘치는 부분은 잘려서 보여지지 않음
-  .img_bg {
+  overflow: hidden;
+  .mp4_bg {
     width: 100%;
     height: 100%;
     position: absolute;
-    opacity: 0.5; // 이미지 투명도
-    object-fit: cover; // 화면 채우기
-  }
-  .header {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: absolute;
-    width: 400px;
-    top: 20px; // top: 절대위치, margin-top: 상대위치
-    /* z-index: 2; // 수직 위치 지정 */
-    .img_logo {
-      width: 200px;
-      margin-bottom: 20px;
-    }
-    .title {
-      font-size: 18px;
-      font-weight: bold;
+    opacity: 0.95;
+    video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
   }
 `;
@@ -42,18 +29,11 @@ const MemberContainer = styled.div`
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  position: absolute;
   align-items: center;
+  justify-content: center;
   width: 100vw;
   height: 100vh;
-  .formbox {
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    align-items: center;
-    width: 100%;
-    padding: 10px 0 10px 0;
-    top: 200px;
-  }
 `;
 
 const Member = () => {
@@ -65,15 +45,13 @@ const Member = () => {
 
   return (
     <MemberContainer>
-      <img src={img_bg} alt="img" className="img_bg" />
-      <div className="header">
-        <img src={img_logo} alt="img" className="img_logo" />
-        <span className="title">SMART BUILDING SUPERVISION PLATFORM</span>
+      <div className="mp4_bg">
+        <video autoPlay loop muted>
+          <source src={mp4_bg} />
+        </video>
       </div>
       <Container pathname={path} className="container">
-        <div className="formbox">
-          <Outlet />
-        </div>
+        <Outlet />
       </Container>
     </MemberContainer>
   );

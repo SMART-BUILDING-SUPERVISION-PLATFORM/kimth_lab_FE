@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
 import styled from "@emotion/styled";
 import { Button, Input, Select } from "antd";
 import useApi from "../../../hooks/api/axiosInterceptor";
@@ -9,8 +9,9 @@ import { DatePicker } from "antd";
 const { Option } = Select;
 
 const ProjectContainer = styled.div`
+  width: 100%;
+  height: 100%;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
 `;
@@ -22,13 +23,6 @@ const ProjectContent = styled.div`
   width: 50%;
   .input {
   }
-`;
-
-const Title = styled.h3`
-  margin-top: 100px;
-  font-size: 30px;
-  font-weight: 500;
-  margin-bottom: 20px;
 `;
 
 const InputWrapper = styled.div`
@@ -56,8 +50,6 @@ const UploadWrapper = styled.div`
 
 const UploadImage = styled.div``;
 
-const ImagePreview = styled.img``;
-
 const Footer = styled.div`
   display: flex;
   justify-content: flex-end;
@@ -68,7 +60,19 @@ const Footer = styled.div`
   }
 `;
 
-const ProjectInfoForm = (companyId) => {
+const pickARandomThumbnail = () => {
+  const projectThumnailList = [
+    "https://images.unsplash.com/photo-1534237710431-e2fc698436d0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8YnVpbGRpbmd8ZW58MHx8MHx8&w=1000&q=80",
+    "https://en.seoultech.ac.kr/storage/splash/SNUST1AFD6F09CE4647CAB9B66C50255213BC.png",
+    "https://uni24k.com/media/CACHE/images/unis/pic_school_14163_building_bf4edbb7/7459d22960f7b059ad4427e304e5e343.jpg",
+    "https://images.pexels.com/photos/302769/pexels-photo-302769.jpeg?cs=srgb&dl=pexels-pixabay-302769.jpg&fm=jpg",
+    "https://koreajoongangdaily.joins.com/data/photo/2023/03/04/6370fba3-314e-4201-aff3-f9ae9655f40c.jpg",
+  ];
+  const randomIndex = Math.floor(Math.random() * projectThumnailList.length);
+  return projectThumnailList[randomIndex];
+};
+
+const NewProjectForm = (companyId) => {
   const [form, setForm] = useState({
     companyId: 0,
     name: "",
@@ -112,18 +116,19 @@ const ProjectInfoForm = (companyId) => {
     }));
   };
 
-  const handleFileUpload = () => {};
-
   const handleSubmit = async () => {
-    console.log(form);
     try {
+      const randomPics = pickARandomThumbnail();
+      setForm((prevForm) => ({
+        ...prevForm,
+        thumbnailUrl: randomPics,
+      }));
+
       await useApi.post("/api/project", form);
       alert("프로젝트가 생성되었습니다.");
-      window.location.href = "/";
-      // onClose();
+      navigate("/home");
     } catch (err) {
       const { code } = err.response.data;
-      console.log(code);
       if (code === -412) {
         // 프로젝트 생성 권한이 없음
         alert("프로젝트 생성 권한이 없습니다.");
@@ -140,17 +145,12 @@ const ProjectInfoForm = (companyId) => {
     }
   };
 
-  useEffect(() => {
-    console.log(form);
-  }, [form]);
-
   const navigate = useNavigate();
 
   return (
     <ProjectContainer>
       {/* TODO: 프로젝트 수정 */}
       {/* TODO: Service Admin - company 선택 기능 */}
-      <Title></Title>
       <ProjectContent>
         {/* TODO: 각 입력창들의 rules 지정 ? */}
         <InputWrapper>
@@ -292,4 +292,4 @@ const ProjectInfoForm = (companyId) => {
   );
 };
 
-export default ProjectInfoForm;
+export default NewProjectForm;

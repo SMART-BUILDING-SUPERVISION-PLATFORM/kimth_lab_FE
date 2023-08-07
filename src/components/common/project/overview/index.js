@@ -1,68 +1,34 @@
 import styled from "@emotion/styled";
-import caution from "../../../../assets/img/project/overview/caution_icon.png";
-import normal from "../../../../assets/img/project/overview/normal_icon.png";
-import healthy from "../../../../assets/img/project/overview/healthy_icon.png";
-import Alert from "./alert";
+import { useLocation } from "react-router-dom";
 
 const OverviewContainer = styled.div`
-  width: 100%;
-  height: 180px;
-  span {
-    margin-top: 10px;
-    color: black;
-    height: 30px;
-    font-size: 20px;
-    font-weight: bold;
-  }
-  .boxContainer {
+  width: calc(100% - 20px);
+  .up {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    padding-bottom: 10px;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+    .txtBox {
+      width: 100%;
+      span {
+        color: black;
+        height: 30px;
+        font-size: 20px;
+        font-weight: bold;
+      }
+    }
   }
 `;
 
-const overviewList = [
-  {
-    className: "caution",
-    iconName: caution,
-    boxLabel: "Caution Projects",
-    countColor: "red",
-  },
-  {
-    className: "littlecaution",
-    iconName: caution,
-    boxLabel: "Little Caution Projects",
-    countColor: "#ffb31a",
-  },
-  {
-    className: "normal",
-    iconName: normal,
-    boxLabel: "Normal Projects",
-    countColor: "#0052cc",
-  },
-  {
-    className: "healthy",
-    iconName: healthy,
-    boxLabel: "Healthy Projects",
-    countColor: "#2eb82e",
-  },
-];
-
 const OverviewBox = () => {
+  const location = useLocation();
   return (
     <OverviewContainer>
-      <span>Overview</span>
-      <hr style={{ marginTop: "10px", marginBottom: "10px" }} />
-      <div className="boxContainer">
-        {overviewList.map(({ className, iconName, boxLabel, countColor }) => (
-          <Alert
-            key={boxLabel}
-            className={className}
-            iconName={iconName}
-            boxLabel={boxLabel}
-            countColor={countColor}
-          />
-        ))}
+      <div className="up">
+        <div className="txtBox">
+          <span>
+            {location.pathname === "/home" ? "All Project" : "Administrator"}
+          </span>
+        </div>
       </div>
     </OverviewContainer>
   );

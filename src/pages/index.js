@@ -3,12 +3,12 @@ import OverviewBox from "../components/common/project/overview/index";
 import ProjectListContainer from "../components/common/project/projectList";
 import { useEffect, useState } from "react";
 import useApi from "../components/hooks/api/axiosInterceptor";
+import { useLocation } from "react-router-dom";
 
 const MainContainer = styled.div`
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  background-color: whitesmoke;
   display: flex;
   justify-content: start;
   flex-direction: column;
@@ -19,30 +19,57 @@ const MainContainer = styled.div`
 `;
 
 const Main = () => {
-  // TODO: admin 종류에 따라(id에 따라) 프로젝트 리스트 다르게 하는거
-  const [projectList, setProjectList] = useState();
+  const location = useLocation();
 
-  const [params, setParams] = useState({
+  const [projectList, setProjectList] = useState([
+    {
+      id: 0,
+      ctrType: {},
+      detailCtrType: {},
+      endDate: "",
+      floorUrl: "",
+      name: "",
+      processRate: 0,
+      startDate: "",
+      thumbnailUrl: "",
+      company: { id: 0, name: "", address: "" },
+      participantList: [
+        {
+          id: 0,
+          name: "",
+          role: { attr: "", value: "" },
+        },
+      ],
+    },
+  ]);
+
+  const [filter, setFilter] = useState({
     name: null,
-    ctrClass: null,
-    detailCtrClass: null,
+    ctrType: null,
+    detailCtrType: null,
     companyId: null,
     onlyMine: false,
+    isPending: false,
   });
 
   useEffect(() => {
     (async () => {
       const { data } = await useApi.get("/api/project", {
-        params,
+        params: filter,
       });
+
       setProjectList(data);
     })();
-  }, [params]);
+  }, [filter, location]);
 
   return (
     <MainContainer>
       <OverviewBox />
-      <ProjectListContainer projectList={projectList} />
+      <ProjectListContainer
+        projectList={projectList}
+        filter={filter}
+        setFilter={setFilter}
+      />
     </MainContainer>
   );
 };

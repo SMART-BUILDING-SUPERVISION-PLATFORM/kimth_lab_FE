@@ -5,16 +5,20 @@ const TabsContainer = styled.div`
   width: 100%;
   height: 30px;
   display: flex;
-  border-bottom: 2px solid rgba(0, 0, 0, 0.1);
 `;
 
 const Tab = styled.div`
   font-size: 15px;
   margin-right: 7px;
+  padding: 5px;
+  border-radius: 5px;
+  background-color: ${({ isActive }) => (isActive ? "black" : "transparent")};
   cursor: pointer;
-  color: ${(props) => (props.isActive ? "black" : "gray")};
+  color: ${({ isActive }) => (isActive ? "white" : "gray")};
+  transition: all 0.2s ease-in-out;
   &:hover {
-    color: black;
+    background-color: black;
+    color: white;
   }
 `;
 
@@ -25,7 +29,7 @@ const Tabs = ({ items }) => {
     <TabsContainer>
       {items.map(({ name, to }) => (
         <Tab key={to} isActive={pathname === to} onClick={() => navigate(to)}>
-          {name}
+          <span>{name}</span>
         </Tab>
       ))}
     </TabsContainer>
