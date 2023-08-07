@@ -1,5 +1,8 @@
 import axios from "axios";
 
+export const FETCH_HOST = "http://127.0.0.1:3000";
+export const HOST = "http://127.0.0.1:8080";
+
 const useApi = axios.create({
   headers: {
     "Content-Type": "application/json;charset=UTF-8",

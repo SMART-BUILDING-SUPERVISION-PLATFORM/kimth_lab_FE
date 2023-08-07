@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import SignInInput from "./input";
 import BottomBtn from "./btn";
 import { useEffect, useState } from "react";
-import useApi from "../../hooks/api/axiosInterceptor";
+import useApi, { FETCH_HOST, HOST } from "../../hooks/api/axiosInterceptor";
 import { CodeSandboxOutlined } from "@ant-design/icons";
 
 const SignContainer = styled.div`
@@ -99,7 +99,7 @@ const SignIn = () => {
 
   const handleLogin = async () => {
     try {
-      await useApi.post("/api/crew/auth/sign-in", form);
+      await useApi.post(`${HOST}/api/crew/auth/sign-in`, form);
       setIsLoginSuccess(true);
       setTimeout(() => {
         navigate("/home");
@@ -122,15 +122,16 @@ const SignIn = () => {
   useEffect(() => {
     (async () => {
       try {
-        const { status } = await fetch(
-          "http://localhost:3000/api/crew/auth/check",
-          {
-            method: "GET",
-            credentials: "include",
-          }
-        );
+        const { status } = await fetch(`${FETCH_HOST}/api/crew/auth/check`, {
+          method: "GET",
+          // credentials: "include",
+        });
+
         if (status === 403) window.location.href = "/home";
-      } catch (err) {}
+      } catch (err) {
+        const { code } = err.response.data;
+        console.log(code);
+      }
     })();
   }, []);
 
