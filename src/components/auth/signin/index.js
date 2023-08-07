@@ -99,7 +99,7 @@ const SignIn = () => {
 
   const handleLogin = async () => {
     try {
-      await useApi.post(`${FETCH_HOST}/api/crew/auth/sign-in`, form);
+      await useApi.post(`/api/crew/auth/sign-in`, form);
       setIsLoginSuccess(true);
       setTimeout(() => {
         navigate("/home");
@@ -122,10 +122,13 @@ const SignIn = () => {
   useEffect(() => {
     (async () => {
       try {
-        const { status } = await fetch(`${FETCH_HOST}/api/crew/auth/check`, {
-          method: "GET",
-          // credentials: "include",
-        });
+        const { status } = await fetch(
+          `http://127.0.0.1:3000/api/crew/auth/check`,
+          {
+            method: "GET",
+            credentials: "include",
+          }
+        );
 
         if (status === 403) window.location.href = "/home";
       } catch (err) {
