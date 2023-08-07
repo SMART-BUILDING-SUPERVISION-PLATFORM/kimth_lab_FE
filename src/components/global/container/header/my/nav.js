@@ -3,28 +3,19 @@ import useApi from "../../../../hooks/api/axiosInterceptor";
 import { useNavigate } from "react-router-dom";
 
 const NavContainer = styled.nav`
-  width: ${(props) =>
-    props.role === "COMPANY_ADMIN" || props.role === "COMPANY_ADMIN"
-      ? "160px"
-      : "100px"};
   display: flex;
   justify-content: space-between;
   font-size: 12px;
-  color: white;
+  transition: all 0.3s ease-in-out 0.1s;
+  color: ${({ isProject }) => (isProject ? "transparent" : "white")};
   .navContainer {
-    width: ${(props) =>
-      props.role === "COMPANY_ADMIN" || props.role === "COMPANY_ADMIN"
-        ? "33%"
-        : "50%"};
     display: flex;
     justify-content: center;
     span {
+      margin-left: 10px;
       font-size: 12px;
       text-decoration: underline;
       cursor: pointer;
-      &:hover {
-        color: #e6e6e6;
-      }
     }
   }
 `;
@@ -33,62 +24,56 @@ const item = {
   ADMIN: [
     {
       key: 1,
-      label: "내 정보",
+      label: "MY",
     },
     {
       key: 2,
-      label: "관리자",
+      label: "ADMIN",
     },
     {
       key: 3,
-      label: "로그아웃",
+      label: "SIGN_OUT",
     },
   ],
   NORMAL: [
     {
       key: 1,
-      label: "내 정보",
+      label: "MY",
     },
     {
       key: 2,
-      label: "로그아웃",
+      label: "SIGN_OUT",
     },
   ],
 };
 
-const Nav = ({ role }) => {
+const Nav = ({ role, id, isProject }) => {
   const nav = useNavigate();
+
   const itemList =
     role === "COMPANY_ADMIN" || role === "SERVICE_ADMIN"
       ? item.ADMIN
       : item.NORMAL;
 
-  const logOut = async (label, role) => {
-    if (label === "로그아웃") {
+  const logOut = async (label) => {
+    if (label === "SIGN_OUT") {
       (async () => {
         try {
-          await useApi.get("/api/sign-out");
+          await useApi.get("/api/crew/auth/sign-out");
           nav("/auth/signin");
         } catch (error) {
           alert("다시 시도해주세요.");
         }
       })();
-    } else if (label === "내 정보") {
-      nav("/my");
-    } else {
-      if (role === "COMPANY_ADMIN") {
-        nav("/admin/company/newbie");
-      } else {
-        nav("/admin/service/newbie");
-      }
-    }
+    } else if (label === "MY") nav(`/${id}/project-participanting`);
+    else nav("/admin/pending");
   };
 
   return (
-    <NavContainer role={role}>
+    <NavContainer role={role} isProject={isProject}>
       {itemList.map(({ key, label }) => (
         <div className="navContainer" key={key}>
-          <span onClick={() => logOut(label, role)}>{label}</span>
+          <span onClick={() => logOut(label)}>{label}</span>
         </div>
       ))}
     </NavContainer>

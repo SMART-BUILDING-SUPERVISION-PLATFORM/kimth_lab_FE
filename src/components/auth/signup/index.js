@@ -3,50 +3,115 @@ import { Input, Select } from "antd";
 import { useEffect, useState } from "react";
 import useApi from "../../hooks/api/axiosInterceptor";
 import Modal from "./companyListModal";
-import { Button } from "antd";
 import { useNavigate } from "react-router-dom";
+import {
+  CheckOutlined,
+  FontSizeOutlined,
+  HomeOutlined,
+  LoadingOutlined,
+  LockOutlined,
+  MailOutlined,
+  PhoneOutlined,
+  SearchOutlined,
+  SendOutlined,
+} from "@ant-design/icons";
 
 const Form = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: center;
   width: 320px;
-  .inputtext {
-    height: 35px;
-    outline: none;
+`;
+
+const InputContainer = styled.div`
+  width: 100%;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: black;
+  margin-top: 10px;
+  box-shadow: inset 0 0 5px white;
+  border-radius: 5px;
+  .loginInput {
+    width: calc(100% - 40px);
+    background-color: transparent;
+    padding: 0;
+    margin: 0;
     border: none;
-    border-bottom: 0.5px solid #ddd;
-    width: inherit;
-    margin-bottom: 5px;
+    height: 40px;
+    color: white;
+    font-size: 15px;
+    caret-color: #5fba7d;
+    ::placeholder {
+      color: rgba(255, 255, 255, 0.9);
+    }
+    &:focus {
+      outline: none;
+    }
   }
 `;
 
 const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
   width: inherit;
-  margin-bottom: 5px;
-  height: 35px;
-`;
-
-const VerfiyButton = styled.button`
-  padding: 0 10px 0 10px;
-  border: none;
-  border-radius: 5px;
-  width: auto;
-  cursor: pointer;
-  transition: all ease-in 0.2s;
-  :hover {
-    color: white;
-    background-color: #1777ff;
+  margin-bottom: 10px;
+  &:nth-of-type(2) {
+    margin-top: 10px;
+  }
+  &:nth-of-type(3) {
+    margin-bottom: 0;
+  }
+  &:nth-of-type(4) {
+    margin-bottom: 0;
+    margin-top: 10px;
+  }
+  .innerWrapper {
+    width: calc(100% - 60px);
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: black;
+    box-shadow: inset 0 0 5px white;
+    border-radius: 5px;
+    .loginInput {
+      width: calc(100% - 40px);
+      background-color: transparent;
+      padding: 0;
+      margin: 0;
+      border: none;
+      height: 40px;
+      color: white;
+      font-size: 15px;
+      caret-color: #5fba7d;
+      ::placeholder {
+        color: rgba(255, 255, 255, 0.9);
+      }
+      &:focus {
+        outline: none;
+      }
+    }
   }
 `;
 
+const VerfiyButton = styled.button`
+  width: 50px;
+  height: 45px;
+  color: white;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  background-color: #1777ff;
+`;
+
 const SubmitButton = styled.button`
-  padding: 0 10px 0 10px;
   border: none;
   border-radius: 5px;
-  width: 200px;
+  width: 320px;
   height: 35px;
   font-weight: bold;
   cursor: pointer;
@@ -66,12 +131,11 @@ const SignUp = () => {
   const [isModalOpen, setModal] = useState(false);
   const [codeInput, setCodeInput] = useState("");
   const [codeSent, setCodeSent] = useState(false);
-  const [timer, setTimer] = useState(null);
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [error, setError] = useState(false);
 
   const [form, setForm] = useState({
-    businessType: "--- 업종을 선택해 주세요 ---",
+    businessType: "업종",
     companyId: 0,
     email: "",
     name: "",
@@ -146,11 +210,9 @@ const SignUp = () => {
         code: codeInput,
         email: form.email,
       };
-
       const {
         data: { validationCode },
       } = await useApi.post("/api/crew/auth/validate-code", req);
-
       setForm({
         ...form,
         validationCode: validationCode,
@@ -159,31 +221,10 @@ const SignUp = () => {
       setCodeInput("");
       setCodeSent(false);
     } catch (err) {
+      alert("인증코드가 유효하지 않습니다.");
       setCodeInput("");
       console.error(err);
     }
-  };
-
-  // 코드 인증한 시점으로부터 60분안에 가입하도록
-  const startTimer = () => {
-    const endTime = new Date().getTime() + 1 * 60 * 1000;
-
-    setTimer(
-      setInterval(() => {
-        const remainingTime = endTime - new Date().getTime();
-
-        if (remainingTime === 0) {
-          clearInterval(timer);
-          alert(
-            "인증 시간이 만료되었습니다. 페이지를 새로고침하고 다시 시도하세요."
-          );
-          window.location.reload();
-        } else if (remainingTime <= 3 * 60 * 1000) {
-          alert("인증 시간이 3분 남았습니다. 시간 안에 가입을 완료해주세요.");
-        }
-      }, 1000)
-    );
-    return;
   };
 
   const isPasswordSame = (value) => {
@@ -195,7 +236,6 @@ const SignUp = () => {
   };
 
   const businessTypeList = [
-    { value: "서비스 관리자", label: "서비스 관리자" },
     { value: "관리자", label: "관리자" },
     { value: "발주처", label: "발주처" },
     { value: "감리사", label: "감리사" },
@@ -208,9 +248,19 @@ const SignUp = () => {
       alert("비밀번호가 일치하지 않습니다.");
       return;
     }
+    const newPhone =
+      form.number.slice(0, 3) +
+      "-" +
+      form.number.slice(3, 7) +
+      "-" +
+      form.number.slice(7, 11);
 
+    const newForm = {
+      ...form,
+      number: newPhone,
+    };
     try {
-      await useApi.post("/api/crew/auth/sign-up", form);
+      await useApi.post("/api/crew/auth/sign-up", newForm);
 
       alert("회원가입 성공");
       navigate("/auth/signin");
@@ -218,16 +268,16 @@ const SignUp = () => {
       const { code } = err.response.data;
       if (code === -402) {
         // 회사 관리자 이미 존재
-        alert("회사 관리자가 이미 존재합니다. 다시 시도해주세요.");
+        alert(`해당회사의 관리자가 이미 존재합니다.`);
       } else if (code === -403) {
         // 이메일 중복
-        alert("이미 사용 중인 이메일입니다. 다시 시도해주세요.");
+        alert("이미 사용 중인 이메일입니다.");
       } else if (code === -412) {
         // validationCode 비유효
-        alert("인증코드가 유효하지 않습니다. 다시 시도해주세요");
+        alert("인증코드가 유효하지 않습니다.");
       } else if (code === -421) {
         // 회사 미존재
-        alert("회사가 존재하지 않습니다. 다시 시도해주세요.");
+        alert("회사가 존재하지 않습니다.");
       }
     }
   };
@@ -253,8 +303,11 @@ const SignUp = () => {
       >
         <Select
           placeholder="업종구분"
-          className="inputtext"
           value={form.businessType}
+          style={{
+            width: "100%",
+            borderRadius: "5px",
+          }}
           onChange={(e) => {
             setForm({ ...form, businessType: e });
           }}
@@ -268,91 +321,151 @@ const SignUp = () => {
 
         {/* for search & send code */}
         <Wrapper>
-          <Input
-            className="inputtext"
-            name="companyName"
-            value={companyName}
-            onChange={(e) => {
-              const { value } = e.target;
-              setCompanyName(value);
-            }}
-            style={{
-              width: "245px",
-            }}
-            placeholder="회사명"
-          />
-          <VerfiyButton onClick={onClickCompany}>회사 검색</VerfiyButton>
-        </Wrapper>
-        <Wrapper>
-          <Input
-            className="inputtext"
-            name="email"
-            value={form.email}
-            onChange={(e) => {
-              onChange(e);
-            }}
-            style={{
-              width: "245px",
-            }}
-            placeholder="이메일"
-          />
-          <VerfiyButton onClick={onClickEmail}>코드 전송</VerfiyButton>
-        </Wrapper>
-        {codeSent && (
-          <Wrapper>
-            <Input
-              className="inputtext"
-              name="code"
-              value={codeInput}
+          <div className="innerWrapper">
+            <HomeOutlined
+              style={{
+                fontSize: "20px",
+                margin: "0 10px",
+                color: "white",
+              }}
+            />
+            <input
+              className="loginInput"
+              name="companyName"
+              value={companyName}
               onChange={(e) => {
                 const { value } = e.target;
-                setCodeInput(value);
+                setCompanyName(value);
+              }}
+              placeholder="회사명"
+            />
+          </div>
+
+          <VerfiyButton onClick={onClickCompany}>
+            <SearchOutlined />
+          </VerfiyButton>
+        </Wrapper>
+        <Wrapper>
+          <div className="innerWrapper">
+            <MailOutlined
+              style={{
+                fontSize: "20px",
+                margin: "0 10px",
+                color: "white",
+              }}
+            />
+            <input
+              className="loginInput"
+              name="email"
+              value={form.email}
+              onChange={(e) => {
+                onChange(e);
               }}
               style={{
                 width: "245px",
               }}
-              placeholder="인증 코드 입력"
+              placeholder="이메일"
             />
-            <VerfiyButton
-              style={{ minWidth: "70px" }}
-              onClick={onClickValidateCode}
-            >
-              인증하기
+          </div>
+
+          <VerfiyButton onClick={onClickEmail}>
+            <SendOutlined />
+          </VerfiyButton>
+        </Wrapper>
+        {codeSent && (
+          <Wrapper>
+            <div className="innerWrapper">
+              <LoadingOutlined
+                style={{
+                  fontSize: "20px",
+                  margin: "0 10px",
+                  color: "white",
+                }}
+              />
+              <input
+                className="loginInput"
+                name="code"
+                value={codeInput}
+                onChange={(e) => {
+                  const { value } = e.target;
+                  setCodeInput(value);
+                }}
+                style={{
+                  width: "245px",
+                }}
+                placeholder="인증코드"
+              />
+            </div>
+            <VerfiyButton onClick={onClickValidateCode}>
+              <CheckOutlined
+                style={{
+                  fontSize: "20px",
+                  margin: "0 10px",
+                  color: "white",
+                }}
+              />
             </VerfiyButton>
           </Wrapper>
         )}
         {/* for search & send code */}
 
-        <Input
-          className="inputtext"
-          name="name"
-          value={form.name}
-          onChange={(e) => {
-            onChange(e);
-          }}
-          placeholder="이름"
-        />
+        <InputContainer>
+          <FontSizeOutlined
+            style={{
+              fontSize: "20px",
+              margin: "0 10px",
+              color: "white",
+            }}
+          />
+          <input
+            className="loginInput"
+            name="name"
+            value={form.name}
+            onChange={(e) => {
+              onChange(e);
+            }}
+            placeholder="이름"
+          />
+        </InputContainer>
 
-        <Input
-          className="inputtext"
-          name="password"
-          value={form.password}
-          onChange={onChange}
-          placeholder="비밀번호"
-          type="password"
-        />
+        <InputContainer>
+          <LockOutlined
+            style={{
+              fontSize: "20px",
+              margin: "0 10px",
+              color: "white",
+            }}
+          />
+          <input
+            className="loginInput"
+            name="password"
+            value={form.password}
+            onChange={onChange}
+            placeholder="비밀번호"
+            type="password"
+          />
+        </InputContainer>
 
-        <Input
-          className="inputtext"
-          name="passwordConfirm"
-          value={passwordConfirm}
-          onChange={(e) => {
-            setPasswordConfirm(e.target.value);
-            isPasswordSame(e.target.value);
-          }}
-          placeholder="비밀번호 확인"
-          type="password"
-        />
+        <InputContainer>
+          <LockOutlined
+            style={{
+              fontSize: "20px",
+              margin: "0 10px",
+              color: "white",
+            }}
+          />
+          <input
+            className="loginInput"
+            name="passwordConfirm"
+            value={passwordConfirm}
+            onChange={(e) => {
+              setPasswordConfirm(e.target.value);
+              isPasswordSame(e.target.value);
+            }}
+            placeholder="비밀번호 확인"
+            type="password"
+          />
+        </InputContainer>
 
         {error && (
           <span
@@ -366,15 +479,24 @@ const SignUp = () => {
             비밀번호가 일치하지 않습니다. 다시 입력해주세요.
           </span>
         )}
-        <Input
-          className="inputtext"
-          name="number"
-          value={form.number}
-          onChange={(e) => {
-            onChange(e);
-          }}
-          placeholder="전화번호 (숫자만 입력해주세요.)"
-        />
+        <InputContainer>
+          <PhoneOutlined
+            style={{
+              fontSize: "20px",
+              margin: "0 10px",
+              color: "white",
+            }}
+          />
+          <input
+            className="loginInput"
+            name="number"
+            value={form.number}
+            onChange={(e) => {
+              onChange(e);
+            }}
+            placeholder="전화번호 (숫자만 입력해주세요.)"
+          />
+        </InputContainer>
       </Form>
 
       <SubmitButton onClick={handleSubmit}>Sign Up</SubmitButton>

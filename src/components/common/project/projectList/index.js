@@ -1,12 +1,13 @@
 import styled from "@emotion/styled";
-import Header from "./header";
+import Header from "./header/headerForFilter";
 import Project from "./project";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import useApi from "../../../hooks/api/axiosInterceptor";
+import NoData from "../../exceptionComponent/noData";
 
 const ProjectContainer = styled.div`
   width: 100%;
-  height: 70vh;
-  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.05);
+  height: calc(100vh - 112px);
   display: flex;
   flex-direction: column;
   margin: 10px 0px 10px 0px;
@@ -15,35 +16,69 @@ const ProjectContainer = styled.div`
     height: auto;
     margin-bottom: 10px;
     overflow-y: scroll;
+    height: 100%;
+    &::-webkit-scrollbar {
+      width: 0;
+    }
   }
 `;
 
-const ProjectListContainer = ({ projectList }) => {
-  const [selectedFilters, setSelectedFilters] = useState({});
+const ProjectListContainer = ({ projectList, setFilter }) => {
+  const [userInfo, setUserInfo] = useState({
+    company: {
+      address: null,
+      id: null,
+      name: null,
+    },
+    email: null,
+    id: null,
+    name: null,
+    pending: false,
+    phone: null,
+    role: { attr: null, value: null },
+  });
 
-  const handleFilterChange = (selectedOptions) => {
-    setSelectedFilters(selectedOptions);
-  };
+  useEffect(() => {
+    (async () => {
+      try {
+        const { data } = await useApi.get("/api/crew");
+        setUserInfo(data);
+      } catch (err) {
+        const { code } = err.response.data;
+        if (code === -423) {
+          alert("존재하지 않는 회원입니다.");
+        }
+      }
+    })();
+  }, []);
 
   return (
     <ProjectContainer>
-      <Header
-        numberOfProject={projectList?.length}
-        onFilterChange={handleFilterChange}
-      />
+      <Header setFilter={setFilter} />
       <div className="scrollable">
-        {projectList?.map((project) => (
-          <Project
-            key={project.id}
-            ClassName={project.companyId}
-            name={project.name}
-            startDate={project.startDate}
-            endDate={project.endDate}
-            processRate={project.processRate}
-            thumbnailUrl={project.thumbnailUrl}
-            floorUrl={project.floorUrl}
-          />
-        ))}
+        {projectList?.length === 0 ? (
+          <NoData color="black" reload={true} />
+        ) : (
+          projectList?.map((project) => (
+            <Project
+              targetCrew={userInfo}
+              key={project?.id}
+              projectId={project?.id}
+              ClassName={project?.companyId}
+              name={project?.name}
+              startDate={project?.startDate}
+              endDate={project?.endDate}
+              processRate={project?.processRate}
+              thumbnailUrl={project?.thumbnailUrl}
+              floorUrl={project?.floorUrl}
+              ctrType={project?.ctrType}
+              detailCtrType={project?.detailCtrType}
+              participantList={project?.participantList}
+              company={project?.company}
+              userInfo={userInfo}
+            />
+          ))
+        )}
       </div>
     </ProjectContainer>
   );

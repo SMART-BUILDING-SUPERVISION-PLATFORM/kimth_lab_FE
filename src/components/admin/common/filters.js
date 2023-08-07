@@ -1,29 +1,20 @@
 import styled from "@emotion/styled";
 import { Select, Input, Button } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
+import { useState } from "react";
 
 const DropdownContainer = styled.div`
-  width: 200px;
   height: 100%;
-  margin-right: 10px;
   display: flex;
   align-items: center;
 `;
 
-const InputContainer = styled.div`
-  width: 200px;
-  height: 100%;
-  margin-right: 10px;
+const InputContainer = styled.form`
+  height: 30px;
+  border: 0.5px solid lightgray;
+  border-radius: 3px;
   display: flex;
-  align-items: center;
-`;
-
-const ButtonContainer = styled.div`
-  width: auto;
-  height: 100%;
-  margin-right: 10px;
-  display: flex;
-  align-items: center;
+  flex-direction: row;
 `;
 
 const { Option } = Select;
@@ -44,44 +35,57 @@ const DropDownWrapper = ({ list, setFilter }) => {
           onChange={handleOptionChange}
           style={{ width: "130px", marginRight: "10px" }}
         >
-          {option?.map(({ label, value }) => (
-            <Option key={value} value={value}>
-              {label}
-            </Option>
-          ))}
+          {option?.map(
+            ({ label: lb, value }) =>
+              value && (
+                <Option key={lb} value={value}>
+                  {lb}
+                </Option>
+              )
+          )}
         </Select>
       ))}
     </DropdownContainer>
   );
 };
-const SearchWrapper = ({ setFilter }) => {
-  const handleOptionChange = (e) => {
-    setFilter((prev) => ({
-      ...prev,
-      name: e.target.value,
-    }));
-  };
+const SearchWrapper = ({ setFilter, placeholder }) => {
+  const [name, setName] = useState(null);
   return (
-    <InputContainer>
+    <InputContainer
+      onSubmit={(e) => {
+        if (name === null || name === "") {
+          alert("검색어를 입력해주세요.");
+          return;
+        }
+
+        e.preventDefault();
+        setFilter((prev) => ({
+          ...prev,
+          name: name,
+        }));
+      }}
+    >
       <Input
-        placeholder="프로젝트 검색"
+        placeholder={placeholder}
         style={{ border: "none" }}
-        onChange={handleOptionChange}
+        onChange={(e) => setName(e.target.value)}
+      />
+      <Button
+        type="text"
+        icon={<SearchOutlined style={{ color: "#aaa", fontSize: 16 }} />}
+        onClick={() => {
+          if (name === null || name === "") {
+            alert("검색어를 입력해주세요.");
+            return;
+          }
+          setFilter((prev) => ({
+            ...prev,
+            name: name,
+          }));
+        }}
       />
     </InputContainer>
   );
 };
 
-const SerachButton = ({ filter, setFilter }) => {
-  return (
-    <ButtonContainer>
-      <Button
-        type="text"
-        icon={<SearchOutlined style={{ color: "#aaa", fontSize: 16 }} />}
-        onClick={() => setFilter(filter)}
-      />
-    </ButtonContainer>
-  );
-};
-
-export { DropDownWrapper, SearchWrapper, SerachButton };
+export { DropDownWrapper, SearchWrapper };

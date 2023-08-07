@@ -1,58 +1,42 @@
 import styled from "@emotion/styled";
-import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import useApi from "../../../hooks/api/axiosInterceptor";
+import { useNavigate } from "react-router-dom";
 import My from "./my";
 
 const HeaderContainer = styled.header`
-  height: 50px;
+  transition: height 0.5s ease-in-out 0.4s;
+  height: ${({ isProject }) => (isProject ? 0 : "50px")};
   display: flex;
   justify-content: space-between;
-  background-color: black;
+  background-color: #1e1e1e;
   padding: 0 50px;
   font-size: 24px;
   font-weight: bold;
 `;
 
 const Title = styled.h1`
+  transition: color 0.3s ease-in-out 0.1s;
+  color: ${({ isProject }) => (isProject ? "transparent" : "white")};
   display: block;
-  color: white;
+
   line-height: 50px;
   cursor: pointer;
+  margin-left: 10px;
 `;
 
-const Header = () => {
-  const location = useLocation();
-  const [userInfo, setUserInfo] = useState({
-    company: {
-      address: null,
-      id: null,
-      name: null,
-    },
-    email: null,
-    id: null,
-    name: null,
-    pending: false,
-    phone: null,
-    role: { attr: null, value: null },
-  });
-
-  useEffect(() => {
-    (async () => {
-      setUserInfo((await useApi.get("/api/crew")).data);
-    })();
-  }, [location]);
+const Header = ({ userInfo, isProject }) => {
+  const navigate = useNavigate();
 
   return (
-    <HeaderContainer>
+    <HeaderContainer isProject={isProject}>
       <Title
+        isProject={isProject}
         onClick={() => {
-          window.location.href = "/";
+          navigate("/home");
         }}
       >
         Smart Building Supervision Platform
       </Title>
-      <My userInfo={userInfo} />
+      <My userInfo={userInfo} isProject={isProject} />
     </HeaderContainer>
   );
 };

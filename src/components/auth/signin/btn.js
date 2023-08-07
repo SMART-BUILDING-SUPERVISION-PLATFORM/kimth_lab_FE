@@ -3,8 +3,10 @@ import styled from "@emotion/styled";
 
 const Button = styled.span`
   cursor: pointer;
+  color: rgba(255, 255, 255, 0.7);
+  transition: all 0.3s ease-in-out;
   :hover {
-    font-weight: bolder;
+    color: rgba(255, 255, 255, 1);
   }
 `;
 
