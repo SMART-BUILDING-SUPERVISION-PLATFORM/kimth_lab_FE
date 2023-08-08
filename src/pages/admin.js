@@ -38,6 +38,7 @@ const AdminContainer = styled.div`
 const OutletContainer = styled.div`
   width: 100%;
   min-height: calc(100% - 114px);
+  padding-bottom: 50px;
   overflow: scroll;
   &::-webkit-scrollbar {
     width: 0;
