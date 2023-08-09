@@ -128,7 +128,7 @@ const UpdateProjectForm = (companyId) => {
       const { code } = err.response.data;
       if (code === -412) {
         // 프로젝트 생성 권한이 없음
-        alert("프로젝트 생성 권한이 없습니다.");
+        alert("프로젝트 수정 권한이 없습니다.");
       } else if (code === -421) {
         // 회사가 존재하지 않음
         alert("회사가 존재하지 않습니다.");
@@ -170,14 +170,10 @@ const UpdateProjectForm = (companyId) => {
         }));
       } catch (err) {
         alert("접근권한이 없습니다.");
-        navigate(`/${projectId}/view`);
+        navigate(`/home`);
       }
     })();
   }, []);
-
-  useEffect(() => {
-    console.log(form);
-  }, [form]);
 
   return (
     <ProjectContainer>
@@ -202,7 +198,6 @@ const UpdateProjectForm = (companyId) => {
             style={{ width: "300px" }}
             onChange={(date) => {
               handleDateChange("startDate", date);
-              console.log(date);
             }}
           />
           <div style={{ width: "80px" }}>~</div>

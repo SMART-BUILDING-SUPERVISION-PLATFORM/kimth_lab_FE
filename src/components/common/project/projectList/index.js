@@ -41,7 +41,7 @@ const ProjectListContainer = ({ projectList, setFilter }) => {
   useEffect(() => {
     (async () => {
       try {
-        const { data } = await useApi.get("/api/crew");
+        const { data } = await useApi.get(`/api/crew`);
         setUserInfo(data);
       } catch (err) {
         const { code } = err.response.data;
@@ -61,7 +61,6 @@ const ProjectListContainer = ({ projectList, setFilter }) => {
         ) : (
           projectList?.map((project) => (
             <Project
-              targetCrew={userInfo}
               key={project?.id}
               projectId={project?.id}
               ClassName={project?.companyId}

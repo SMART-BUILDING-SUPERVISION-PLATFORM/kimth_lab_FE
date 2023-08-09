@@ -122,7 +122,7 @@ const More = ({
   });
   const sendReply = async () => {
     try {
-      await useApi.put("/api/note", form);
+      await useApi.put(`/api/note`, form);
 
       setMore(false);
       setIsScrollBlocked(false);

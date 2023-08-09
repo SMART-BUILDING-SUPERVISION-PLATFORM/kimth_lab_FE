@@ -12,7 +12,7 @@ const ProjectForParticipanting = () => {
   useEffect(() => {
     (async () => {
       try {
-        const { data } = await useApi.get("/api/project", {
+        const { data } = await useApi.get(`/api/project`, {
           params: filter,
         });
         setProjectList(data);

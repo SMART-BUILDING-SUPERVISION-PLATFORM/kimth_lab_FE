@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import SignInInput from "./input";
 import BottomBtn from "./btn";
 import { useEffect, useState } from "react";
-import useApi, { FETCH_HOST, HOST } from "../../hooks/api/axiosInterceptor";
+import useApi from "../../hooks/api/axiosInterceptor";
 import { CodeSandboxOutlined } from "@ant-design/icons";
 
 const SignContainer = styled.div`
@@ -106,6 +106,7 @@ const SignIn = () => {
       }, 1300);
     } catch (err) {
       const { code } = err.response.data;
+
       if (code === -401) {
         setIsLoginFailed(true);
         setTimeout(() => {
@@ -130,14 +131,13 @@ const SignIn = () => {
           }
         );
 
-        if (status === 403) window.location.href = "/home";
-      } catch (err) {
-        const { code } = err.response.data;
-        console.log(code);
-      }
+        if (status === 403) {
+          navigate("/home");
+        }
+      } catch (err) {}
     })();
+    return () => {};
   }, []);
-
   return (
     <SignContainer
       iconColor={isLoginFailed ? "red" : isLoginSuccess ? "#39F614" : "white"}

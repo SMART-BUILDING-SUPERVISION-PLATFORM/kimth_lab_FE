@@ -2,33 +2,36 @@ import { CloseOutlined } from "@ant-design/icons";
 import styled from "@emotion/styled";
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
-import useApi from "../../../hooks/api/axiosInterceptor";
+import useApi from "../../../../../hooks/api/axiosInterceptor";
 
 const UpLoadContainer = styled.div`
   position: absolute;
-  top: -45.875px;
-  left: -10px;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
   z-index: 4;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   padding: 10px;
-  padding-bottom: 40px;
-  width: calc(100% + 20px);
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(255, 255, 255, 0.7);
   z-index: 200;
   .close {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
+    background-color: rgba(0, 0, 0, 0.9);
+    padding: 10px;
+    border-radius: 10px;
+    color: white;
 
     .txt {
       font-size: 18px;
-      color: white;
     }
     .icon {
-      color: white;
       font-size: 25px;
       cursor: pointer;
     }
@@ -36,20 +39,16 @@ const UpLoadContainer = styled.div`
 `;
 
 const PreviewContainer = styled.div`
-  width: 100%;
-  height: 100%;
+  height: 500px;
   display: flex;
-  flex-direction: column;
-  overflow: scroll;
+  overflow-x: scroll;
   ::-webkit-scrollbar {
     display: none;
   }
   .item {
-    width: 100%;
-    margin-bottom: 10px;
-
+    margin-right: 20px;
     .src {
-      width: 100%;
+      height: 100%;
       object-fit: cover;
     }
   }
@@ -58,9 +57,12 @@ const PreviewContainer = styled.div`
 const BottomContainer = styled.div`
   width: 100%;
   margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
   .send,
   .retry {
-    width: 100%;
+    width: 200px;
     height: 40px;
     border-radius: 5px;
     background-color: #1777ff;
@@ -119,7 +121,7 @@ const UpLoad = ({ setIsUploadOpen }) => {
   return (
     <UpLoadContainer>
       <div className="close">
-        <span className="txt">이미지 업로드</span>
+        <span className="txt">파노라마 업로드</span>
         <div className="icon" onClick={() => setIsUploadOpen(false)}>
           <CloseOutlined />
         </div>

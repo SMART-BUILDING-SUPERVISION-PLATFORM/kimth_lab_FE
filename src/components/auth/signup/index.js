@@ -159,7 +159,7 @@ const SignUp = () => {
       return;
     }
     try {
-      const { data } = await useApi.get("/api/company", {
+      const { data } = await useApi.get(`/api/company`, {
         params: {
           name: companyName,
         },
@@ -190,7 +190,7 @@ const SignUp = () => {
 
     try {
       setCodeSent(false);
-      await useApi.get("/api/crew/auth/email-duplication", {
+      await useApi.get(`/api/crew/auth/email-duplication`, {
         params: {
           email: form.email,
         },
@@ -212,7 +212,7 @@ const SignUp = () => {
       };
       const {
         data: { validationCode },
-      } = await useApi.post("/api/crew/auth/validate-code", req);
+      } = await useApi.post(`/api/crew/auth/validate-code`, req);
       setForm({
         ...form,
         validationCode: validationCode,
@@ -260,7 +260,7 @@ const SignUp = () => {
       number: newPhone,
     };
     try {
-      await useApi.post("/api/crew/auth/sign-up", newForm);
+      await useApi.post(`/api/crew/auth/sign-up`, newForm);
 
       alert("회원가입 성공");
       navigate("/auth/signin");

@@ -1,8 +1,6 @@
 import styled from "@emotion/styled";
 import Status from "./status";
-import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import useApi from "../../../../hooks/api/axiosInterceptor";
 
 const UpContainer = styled.div`
   display: flex;
@@ -31,6 +29,7 @@ const ProjectInfo = styled.div`
       font-weight: bold;
       display: flex;
       justify-content: space-between;
+      color: rgba(0, 0, 0, 0.7);
     }
     .rate {
       height: 15px;
@@ -61,7 +60,6 @@ const UpWrapper = ({
 }) => {
   const { pathname } = useLocation();
 
-  // 나중에 서버에서 받아오는 데이터로 수정
   const properties = {
     processRate: {
       attr: "공정률",

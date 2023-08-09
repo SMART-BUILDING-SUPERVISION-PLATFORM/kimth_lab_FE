@@ -3,9 +3,6 @@ import { useEffect, useState } from "react";
 import { DropDownWrapper } from "../../../admin/common/filters";
 import { projectRoleTypes } from "../../../../types/parameters";
 import useApi from "../../../hooks/api/axiosInterceptor";
-import NoData from "../../../common/exceptionComponent/noData";
-import UpLoad from "./upload";
-import { useNavigate, useParams } from "react-router-dom";
 
 const ParticipantsContainer = styled.div`
   width: 100%;
@@ -37,6 +34,7 @@ const ParticipantListContainer = styled.ul`
   width: 100%;
   min-height: 450px;
   padding: 10px;
+  margin-top: 20px;
   box-shadow: -1px 0px 21px -5px rgba(255, 255, 255, 0.75) inset;
   -webkit-box-shadow: -1px 0px 21px -5px rgba(255, 255, 255, 0.75) inset;
   -moz-box-shadow: -1px 0px 21px -5px rgba(255, 255, 255, 0.75) inset;
@@ -78,6 +76,7 @@ const BottomContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
+  margin-top: 30px;
   .up {
     width: 100%;
     height: 40px;
@@ -119,9 +118,6 @@ const BottomContainer = styled.div`
 `;
 
 const Participants = ({ participantList, form, setForm }) => {
-  const { projectId } = useParams();
-  const navigate = useNavigate();
-  const [isUploadOpen, setIsUploadOpen] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const [selectedParticipant, setSelectedParticipant] = useState({
     id: 0,
@@ -140,13 +136,14 @@ const Participants = ({ participantList, form, setForm }) => {
 
   const changeRole = async (form) => {
     try {
-      await useApi.put("/api/participant", form);
+      await useApi.put(`/api/participant`, form);
       alert("권한 변경 완료");
     } catch (err) {
       const { code } = err.response.data;
 
       if (code === -426) alert("해당 인원을 찾을 수 없습니다.");
       if (code === -412) alert("접근 권한이 없습니다.");
+      if (code === -414) alert("본인의 권한은 변경할 수 없습니다.");
     }
   };
 
@@ -157,7 +154,7 @@ const Participants = ({ participantList, form, setForm }) => {
         targetCrewId: form.targetCrewId,
       };
 
-      await useApi.delete("/api/participant", {
+      await useApi.delete(`/api/participant`, {
         params,
       });
       alert("삭제 완료");
@@ -166,48 +163,29 @@ const Participants = ({ participantList, form, setForm }) => {
 
       if (code === -426) alert("해당 인원을 찾을 수 없습니다.");
       if (code === -412) alert("접근 권한이 없습니다.");
+      if (code === -414) alert("본인의 삭제할 수 없습니다.");
     }
   };
-
-  const deleteProject = async (projectId) => {
-    try {
-      await useApi.delete(`/api/project/${projectId}`);
-      alert("프로젝트 삭제 완료");
-      window.location.href = "/home";
-    } catch (err) {
-      const { code } = err.response.data;
-
-      if (code === -412) alert("접근 권한이 없습니다.");
-    }
-  };
-
-  // todo
-  // 프로젝트 수정
 
   return (
     <ParticipantsContainer>
-      {isUploadOpen && <UpLoad setIsUploadOpen={setIsUploadOpen} />}
       <div>
         <div className="up">
           <span className="title">프로젝트 참여자</span>
           <span className="number">{participantList.length}</span>
         </div>
         <ParticipantListContainer selectedIndex={selectedIndex}>
-          {participantList.length === 0 ? (
-            <NoData color="white" />
-          ) : (
-            participantList?.map((participant, index) => (
-              <li
-                className="item"
-                onClick={() => {
-                  setSelectedIndex(index);
-                }}
-              >
-                <span className="name">{participant?.name}</span>
-                <span className="role">{participant?.role?.value}</span>
-              </li>
-            ))
-          )}
+          {participantList?.map((participant, index) => (
+            <li
+              className="item"
+              onClick={() => {
+                setSelectedIndex(index);
+              }}
+            >
+              <span className="name">{participant?.name}</span>
+              <span className="role">{participant?.role?.value}</span>
+            </li>
+          ))}
         </ParticipantListContainer>
         <BottomContainer>
           <div className="up">
@@ -223,21 +201,6 @@ const Participants = ({ participantList, form, setForm }) => {
           </button>
           <button className="delete" onClick={() => deleteParticipant(form)}>
             참여자 삭제
-          </button>
-          <button className="upload" onClick={() => setIsUploadOpen(true)}>
-            이미지 업로드
-          </button>
-          <button
-            className="setting"
-            onClick={() => navigate(`/update/${projectId}`)}
-          >
-            프로젝트 수정
-          </button>
-          <button
-            className="eliminate"
-            onClick={() => deleteProject(projectId)}
-          >
-            프로젝트 삭제
           </button>
         </BottomContainer>
       </div>

@@ -7,7 +7,7 @@ const companyList = {
 };
 
 const companyListCaller = async () => {
-  const { data } = await useApi.get("/api/company");
+  const { data } = await useApi.get(`/api/company`);
   const companyListOption = data.map((company) => {
     return {
       label: company.name,

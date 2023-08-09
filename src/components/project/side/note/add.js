@@ -76,7 +76,7 @@ const Add = ({
 
   const sendNote = async () => {
     try {
-      await useApi.post("/api/note", form);
+      await useApi.post(`/api/note`, form);
       setNewNote(!newNote);
       setIsScrollBlocked(false);
     } catch (error) {

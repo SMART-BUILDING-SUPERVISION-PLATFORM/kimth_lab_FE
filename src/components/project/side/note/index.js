@@ -79,19 +79,13 @@ const Note = ({ projectId, noteType, userInfo }) => {
 
           setNotes(data);
         }
-      } catch (err) {
-        console.log(err);
-      }
+      } catch (err) {}
     })();
   }, [userInfo, noteType, newNote, isScrollBlocked]);
 
   useEffect(() => {
     setNewNote(false);
   }, [noteType]);
-
-  useEffect(() => {
-    console.log(newNote);
-  }, [newNote]);
 
   return (
     <NoteContainer

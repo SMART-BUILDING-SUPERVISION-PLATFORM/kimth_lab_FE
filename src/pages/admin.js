@@ -99,12 +99,12 @@ const adminItem = [
   {
     name: "신규회원",
     to: "/admin/pending",
-    endPoint: "/api/crew/admin-ca",
+    endPoint: `/api/crew/admin-ca`,
   },
   {
     name: "회원관리",
     to: "/admin/manage",
-    endPoint: "/api/crew/admin-all",
+    endPoint: `/api/crew/admin-all`,
   },
 ];
 

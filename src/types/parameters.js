@@ -59,7 +59,7 @@ const roleTypes = {
 
 const projectRoleTypes = {
   label: "프로젝트 권한",
-  className: "role",
+  className: "targetProjectRole",
   option: [
     {
       label: "프로젝트 관리자",

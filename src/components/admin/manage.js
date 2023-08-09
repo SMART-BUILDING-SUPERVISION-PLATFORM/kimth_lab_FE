@@ -33,7 +33,7 @@ const Manage = () => {
         isPending: false,
         companyId: filter.companyId,
       };
-      const { data } = await useApi.get("/api/crew/admin-all", {
+      const { data } = await useApi.get(`/api/crew/admin-all`, {
         params: req,
       });
 

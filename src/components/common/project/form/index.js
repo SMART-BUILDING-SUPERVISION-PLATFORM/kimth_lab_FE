@@ -124,7 +124,7 @@ const NewProjectForm = (companyId) => {
         thumbnailUrl: randomPics,
       }));
 
-      await useApi.post("/api/project", form);
+      await useApi.post(`/api/project`, form);
       alert("프로젝트가 생성되었습니다.");
       navigate("/home");
     } catch (err) {

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 
 const DownContainer = styled.div`
+  position: relative;
   width: 100%;
   height: 100%;
   margin-top: 50px;
@@ -16,7 +17,7 @@ const Down = ({ projectData }) => {
   const [form, setForm] = useState({
     projectId: Number.parseInt(projectId),
     targetCrewId: 0,
-    role: null,
+    targetProjectRole: null,
   });
   return (
     <DownContainer>

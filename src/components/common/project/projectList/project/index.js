@@ -59,7 +59,6 @@ const ThumbnailWrapper = ({ thumbnailUrl, projectId }) => {
 };
 
 const Project = ({
-  targetCrew,
   projectId,
   name,
   startDate,
@@ -77,7 +76,6 @@ const Project = ({
     <Container>
       <ThumbnailWrapper thumbnailUrl={thumbnailUrl} projectId={projectId} />
       <ProjectWrapper
-        targetCrew={targetCrew}
         projectId={projectId}
         name={name}
         startDate={startDate}

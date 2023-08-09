@@ -11,7 +11,6 @@ const Container = styled.div`
 `;
 
 const ProjectWrapper = ({
-  targetCrew,
   projectId,
   name,
   startDate,
@@ -36,12 +35,12 @@ const ProjectWrapper = ({
         userInfo={userInfo}
       />
       <DownWrapper
-        targetCrew={targetCrew}
         projectId={projectId}
         ctrType={ctrType}
         detailCtrType={detailCtrType}
         company={company}
         participantList={participantList}
+        userInfo={userInfo}
       />
     </Container>
   );

@@ -54,7 +54,7 @@ const Main = () => {
 
   useEffect(() => {
     (async () => {
-      const { data } = await useApi.get("/api/project", {
+      const { data } = await useApi.get(`/api/project`, {
         params: filter,
       });
 

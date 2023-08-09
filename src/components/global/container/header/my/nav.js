@@ -59,7 +59,7 @@ const Nav = ({ role, id, isProject }) => {
     if (label === "SIGN_OUT") {
       (async () => {
         try {
-          await useApi.get("/api/crew/auth/sign-out");
+          await useApi.get(`/api/crew/auth/sign-out`);
           nav("/auth/signin");
         } catch (error) {
           alert("다시 시도해주세요.");

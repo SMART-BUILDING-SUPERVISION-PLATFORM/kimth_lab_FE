@@ -47,7 +47,7 @@ const GlobalContainer = () => {
   useEffect(() => {
     (async () => {
       try {
-        const { data } = await useApi.get("/api/crew");
+        const { data } = await useApi.get(`/api/crew`);
         setUserInfo(data);
       } catch (err) {
         const { code } = err.response.data;
