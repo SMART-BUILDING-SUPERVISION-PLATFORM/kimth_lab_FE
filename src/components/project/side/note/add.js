@@ -79,11 +79,13 @@ const Add = ({
       await useApi.post(`/api/note`, form);
       setNewNote(!newNote);
       setIsScrollBlocked(false);
+      alert("노트가 작성되었습니다.");
     } catch (error) {
       const { code } = error.response.data;
 
       if (code === -426) alert("접근 권한이 없습니다.");
       if (code === -411) alert("승인 대기중입니다.");
+      if (code === -412) alert("노트 작성 권한이 없습니다.");
     }
   };
   return (

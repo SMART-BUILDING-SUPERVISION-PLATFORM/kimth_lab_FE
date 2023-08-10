@@ -8,7 +8,7 @@ import Admin from "./pages/admin";
 import NewProjectForm from "./components/common/project/form";
 import Newbie from "./components/admin/newbie";
 import Manage from "./components/admin/manage";
-import MyPage from "./pages/my";
+import MyPage from "./pages/myPage";
 import View from "./components/project/models/view";
 import Project from "./pages/project";
 import ProjectForParticipanting from "./components/mypage/outlet/project-participate";

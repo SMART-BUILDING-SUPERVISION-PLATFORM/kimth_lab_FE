@@ -56,7 +56,7 @@ const FilterWrapper = ({ filter, setFilter, crewId, userInfo }) => {
         >
           참여중인 프로젝트
         </Item>
-        {attr !== "SERVICE_ADMIN" && attr !== "COMPANY_ADMIN" && (
+        {attr !== "SERVICE_ADMIN" && (
           <Item
             className="item"
             onClick={() => navigate(`/${crewId}/project-pending`)}

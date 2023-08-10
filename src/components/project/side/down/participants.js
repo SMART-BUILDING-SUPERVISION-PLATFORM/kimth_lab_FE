@@ -144,6 +144,8 @@ const Participants = ({ participantList, form, setForm }) => {
       if (code === -426) alert("해당 인원을 찾을 수 없습니다.");
       if (code === -412) alert("접근 권한이 없습니다.");
       if (code === -414) alert("본인의 권한은 변경할 수 없습니다.");
+      if (code === -415) alert("관리자에게 접근이 불가합니다.");
+      if (code === -416) alert("최상위 관리자에게 접근이 불가합니다.");
     }
   };
 
@@ -163,7 +165,9 @@ const Participants = ({ participantList, form, setForm }) => {
 
       if (code === -426) alert("해당 인원을 찾을 수 없습니다.");
       if (code === -412) alert("접근 권한이 없습니다.");
-      if (code === -414) alert("본인의 삭제할 수 없습니다.");
+      if (code === -414) alert("본인의 정보는 삭제할 수 없습니다.");
+      if (code === -415) alert("관리자에게 접근이 불가합니다.");
+      if (code === -416) alert("최상위 관리자에게 접근이 불가합니다.");
     }
   };
 

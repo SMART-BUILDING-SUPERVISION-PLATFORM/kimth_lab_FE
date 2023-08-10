@@ -154,10 +154,9 @@ const SideWrapper = ({ projectId, userInfo }) => {
           <SwapLeftOutlined />
         </span>
         <span className="role">
-          {userInfo?.role.attr === "SERVICE_ADMIN" ||
-          userInfo?.role.attr === "COMPANY_ADMIN"
-            ? userInfo?.role.attr
-            : roleParser(userInfo?.id, projectData?.participantList)}
+          {roleParser(userInfo?.id, projectData?.participantList)
+            ? roleParser(userInfo?.id, projectData?.participantList)
+            : userInfo?.role.attr}
         </span>
       </div>
       <div className="upward" ref={upWardRef}>
