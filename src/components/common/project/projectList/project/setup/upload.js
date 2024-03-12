@@ -1,7 +1,6 @@
 import { CloseOutlined } from "@ant-design/icons";
 import styled from "@emotion/styled";
 import { useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
 import useApi from "../../../../../hooks/api/axiosInterceptor";
 
 const UpLoadContainer = styled.div`
@@ -77,9 +76,8 @@ const BottomContainer = styled.div`
   }
 `;
 
-const UpLoad = ({ setIsUploadOpen }) => {
+const UpLoad = ({ setIsUploadOpen, projectId }) => {
   const ref = useRef(null);
-  const { projectId } = useParams();
   const [panoramaSrcList, setPanoramaSrcList] = useState([]);
   const handleFileChange = (e) => {
     setPanoramaSrcList([]);
@@ -102,7 +100,9 @@ const UpLoad = ({ setIsUploadOpen }) => {
       alert("파노라마를 등록해주세요");
       return;
     }
+
     try {
+      console.log(panoramaSrcList);
       await useApi.post(`/api/project/${projectId}`, {
         panoramaSrcList,
       });

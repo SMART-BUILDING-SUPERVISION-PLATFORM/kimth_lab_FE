@@ -85,7 +85,9 @@ const SetUp = ({ projectId, userInfo, isSameCompany, isHome, isSa }) => {
 
   return (
     <>
-      {isUploadOpen && <UpLoad setIsUploadOpen={setIsUploadOpen} />}
+      {isUploadOpen && (
+        <UpLoad setIsUploadOpen={setIsUploadOpen} projectId={projectId} />
+      )}
       <SetUpContainer isRequested={isRequested}>
         {pathname !== "project-pending" && (
           <>

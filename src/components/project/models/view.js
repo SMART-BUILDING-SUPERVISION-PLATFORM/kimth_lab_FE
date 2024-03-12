@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 import { useEffect, useRef, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import LoadingWrapper from "../../common/exceptionComponent/loading";
+import useApi from "../../hooks/api/axiosInterceptor";
 
 const ViewContainer = styled.div`
   width: 100%;
@@ -26,6 +27,7 @@ const Iframe = styled.iframe`
 const View = () => {
   const { projectId } = useOutletContext();
   const [isFrameLoaded, setIsFrameLoaded] = useState(false);
+  const [url, setUrl] = useState("");
 
   const loadingRef = useRef(null);
 
@@ -37,10 +39,41 @@ const View = () => {
       }, 500);
     }
   }, [isFrameLoaded]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const { data } = await useApi.get(
+          `/api/project/python/panorama/${projectId}`
+        );
+
+        if (data.length === 0) {
+          alert("파노라마가 아직 등록되지 않았습니다.");
+        } else {
+          const res = await fetch(`http://127.0.0.1:8000/panorama`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              projectId,
+              panoBase64: data[0]?.src,
+            }),
+          });
+          const pyData = await res.json();
+          setUrl(pyData?.virtualUrl);
+          console.log(pyData);
+        }
+      } catch (e) {
+        alert("Server error.");
+      }
+    })();
+  }, []);
+
   return (
     <ViewContainer isFrameLoaded={isFrameLoaded}>
       <Iframe
-        src={`http://localhost:8000/`}
+        src={url}
         onConne
         onLoad={async () => {
           setTimeout(() => {
@@ -49,7 +82,6 @@ const View = () => {
         }}
         title="view"
       />
-
       <div className="disappearLinear" ref={loadingRef}>
         <LoadingWrapper
           color="white"
